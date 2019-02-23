@@ -8,6 +8,11 @@ provider:
   region: us-west-2
 
 functions:
+  server:
+    handler: project/functions/server/index.server
+    events:
+      - http: ANY /
+      - http: ANY /{proxy+}
   translate:
     handler: project/functions/translate/handler.translate
     events:
@@ -15,3 +20,11 @@ functions:
           path: translate
           method: get
           cors: true
+
+plugins:
+  - serverless-apigw-binary
+
+custom:
+  apigwBinary:
+    types:
+      - '*/*'

@@ -1,0 +1,14 @@
+{
+    "dev": {
+        "TranslateUrl": "localhost:3001/translate",
+        "VerboseServer": true
+    },
+    "test": {
+        "TranslateUrl": "translate",
+        "VerboseServer": false
+    },
+    "prod": {
+        "TranslateUrl": "translate",
+        "VerboseServer": false
+    }
+}

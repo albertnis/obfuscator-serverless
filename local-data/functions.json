@@ -1,0 +1,20 @@
+{
+    "translate": {
+        "result1": {
+            "TargetLanguageCode": "fr",
+            "TranslatedText": "tests"
+        },
+        "result2": {
+            "TargetLanguageCode": "ru",
+            "TranslatedText": "тесты"
+        },
+        "result3": {
+            "TargetLanguageCode": "es",
+            "TranslatedText": "pruebas"
+        },
+        "result4": {
+            "TargetLanguageCode": "en",
+            "TranslatedText": "evidence"
+        }
+    }
+}

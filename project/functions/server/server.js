@@ -2,10 +2,18 @@ const express = require("express"),
   app = express(),
   template = require("./template"),
   path = require("path")
+  morgan = require('morgan')
+
+const config = require("../../../config.json");
+const environment = process.env.NODE_ENV || "dev";
+const environmentConfig = config[environment];
+
+if (environmentConfig["VerboseServer"]) {
+  app.use(morgan('tiny'))
+}
 
 // Serving static files
 app.use("/assets", express.static(path.resolve(__dirname, "assets")))
-app.use("/media", express.static(path.resolve(__dirname, "media")))
 
 // hide powered by express
 app.disable("x-powered-by")

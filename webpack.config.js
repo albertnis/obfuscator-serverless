@@ -1,4 +1,5 @@
-const path = require("path")
+const path = require("path"),
+  HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -14,12 +15,25 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
+        use:
+        {
+          loader: "babel-loader"
+        }
+      },
+      {
+        test: /\.html$/,
         use: [
           {
-            loader: "babel-loader"
+            loader: "html-loader"
           }
         ]
       }
     ]
-  }
+  },
+  plugins: [
+    new HtmlWebPackPlugin({
+      template: "./project/client/index.html",
+      filename: "./index.html"
+    })
+  ]
 }

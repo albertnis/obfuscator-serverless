@@ -20,7 +20,7 @@ const binaryMimeTypes = [
   'text/xml'
 ]
 
-const server = require("./backend")
+const server = require("./backend-output")
 module.exports.server = sls(server, {
   binary: binaryMimeTypes
 })

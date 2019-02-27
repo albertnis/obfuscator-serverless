@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default ({ children, meta }) => (
+export default () => (
   <div>
     We actually did it!
   </div>

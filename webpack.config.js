@@ -2,8 +2,9 @@ const path = require("path");
 
 const frontend = {
   entry: {
-    frontend: "./src/frontend/Client.jsx",
+    frontend: "./src/frontend/Client.tsx",
   },
+  devtool: 'inline-source-map',
   output: {
     path: path.resolve(__dirname, "static"),
     filename: "frontend-output.js"
@@ -17,11 +18,19 @@ const frontend = {
         {
           loader: "babel-loader"
         }
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use:
+        {
+          loader: "ts-loader"
+        }
       }
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx', '.ts', '.tsx']
   }
 };
 
@@ -58,11 +67,19 @@ const backend = {
         {
           loader: "node-loader"
         }
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use:
+        {
+          loader: "ts-loader"
+        }
       }
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx', '.ts', '.tsx']
   }
 };
 

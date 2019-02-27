@@ -6,5 +6,4 @@ jspm_packages
 .serverless
 
 # Transpile output
-project/client/views
-project/functions/server/assets
+*-output.js

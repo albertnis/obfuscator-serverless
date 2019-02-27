@@ -1,14 +1,13 @@
 const path = require("path"),
   HtmlWebPackPlugin = require("html-webpack-plugin");
 
-module.exports = {
+const frontend = {
   entry: {
-    client: "./project/client/Client.js",
-    bundle: "./project/client/Bundle.js"
+    bundle: "./project/client/Bundle.js",
   },
   output: {
-    path: path.resolve(__dirname, "project/functions/server/assets"),
-    filename: "[name].js"
+    path: path.resolve(__dirname, "project/client"),
+    filename: "frontend-output.js"
   },
   module: {
     rules: [
@@ -36,4 +35,41 @@ module.exports = {
       filename: "./index.html"
     })
   ]
-}
+};
+
+const backend = {
+  entry: {
+    backend: "./project/functions/server/server.js"
+  },
+  output: {
+    path: path.resolve(__dirname, "project/functions/server"),
+    filename: "backend-output.js",
+    libraryTarget: 'commonjs'
+  },
+  target: 'node',
+  externals: [
+    /^(?!\.|\/).+/i
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use:
+        {
+          loader: "babel-loader"
+        }
+      },
+      {
+        test: /\.node$/,
+        exclude: /node_modules/,
+        use:
+        {
+          loader: "node-loader"
+        }
+      }
+    ]
+  }
+};
+
+module.exports = [frontend, backend];

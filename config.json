@@ -1,5 +1,5 @@
 {
-    "dev": {
+    "development": {
         "TranslateUrl": "localhost:3001/translate",
         "VerboseServer": true
     },

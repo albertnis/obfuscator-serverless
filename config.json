@@ -1,14 +1,17 @@
 {
     "development": {
         "TranslateUrl": "localhost:3001/translate",
-        "VerboseServer": true
+        "VerboseServer": true,
+        "ServeStatic": true
     },
-    "test": {
+    "stage": {
         "TranslateUrl": "translate",
-        "VerboseServer": false
+        "VerboseServer": false,
+        "ServeStatic": false
     },
     "prod": {
         "TranslateUrl": "translate",
-        "VerboseServer": false
+        "VerboseServer": false,
+        "ServeStatic": false
     }
 }

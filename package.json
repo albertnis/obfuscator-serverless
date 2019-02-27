@@ -5,11 +5,11 @@
   "main": "handler.js",
   "scripts": {
     "functions": "json-server --watch local-data/functions.json --port 3001",
-    "server": "node project/functions/server/backend-output.js",
-    "babel": "babel project/client -d project/client/views --ignore project/client/views",
-    "pack": "webpack --config webpack.config.js --mode development",
-    "build": "npm run pack && npm run babel",
-    "start": "npm run build && npm run server"
+    "server": "node src/backend/backend-output.js",
+    "start": "webpack --config webpack.config.js --mode development --watch",
+    "build-dev": "webpack --config webpack.config.js --mode development",
+    "build-stage": "webpack --config webpack.config.js --mode stage",
+    "build-prod": "webpack --config webpack.config.js --mode production"
   },
   "author": "Albert Nisbet",
   "license": "ISC",

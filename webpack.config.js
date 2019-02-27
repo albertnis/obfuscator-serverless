@@ -1,12 +1,11 @@
-const path = require("path"),
-  HtmlWebPackPlugin = require("html-webpack-plugin");
+const path = require("path");
 
 const frontend = {
   entry: {
-    bundle: "./project/client/Bundle.js",
+    frontend: "./src/frontend/Client.js",
   },
   output: {
-    path: path.resolve(__dirname, "project/client"),
+    path: path.resolve(__dirname, "static"),
     filename: "frontend-output.js"
   },
   module: {
@@ -18,35 +17,24 @@ const frontend = {
         {
           loader: "babel-loader"
         }
-      },
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: "html-loader"
-          }
-        ]
       }
     ]
-  },
-  plugins: [
-    new HtmlWebPackPlugin({
-      template: "./project/client/index.html",
-      filename: "./index.html"
-    })
-  ]
+  }
 };
 
 const backend = {
   entry: {
-    backend: "./project/functions/server/server.js"
+    backend: "./src/backend/backend.js"
   },
   output: {
-    path: path.resolve(__dirname, "project/functions/server"),
+    path: path.resolve(__dirname, "src/backend"),
     filename: "backend-output.js",
     libraryTarget: 'commonjs'
   },
   target: 'node',
+  node: {
+    __dirname: false,
+  },
   externals: [
     /^(?!\.|\/).+/i
   ],

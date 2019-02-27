@@ -9,12 +9,12 @@ provider:
 
 functions:
   server:
-    handler: project/functions/server/index.server
+    handler: src/backend/serverlessAdapter.server
     events:
       - http: ANY /
       - http: ANY /{proxy+}
   translate:
-    handler: project/functions/translate/handler.translate
+    handler: src/functions/translate/handler.translate
     events:
       - http:
           path: translate

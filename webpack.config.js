@@ -2,7 +2,7 @@ const path = require("path");
 
 const frontend = {
   entry: {
-    frontend: "./src/frontend/Client.js",
+    frontend: "./src/frontend/Client.jsx",
   },
   output: {
     path: path.resolve(__dirname, "static"),
@@ -19,6 +19,9 @@ const frontend = {
         }
       }
     ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
   }
 };
 
@@ -57,6 +60,9 @@ const backend = {
         }
       }
     ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
   }
 };
 

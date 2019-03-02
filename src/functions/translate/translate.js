@@ -11,7 +11,7 @@ exports.translate = (event, context, callback) => {
       "language3" in event.queryStringParameters
     )
   ) {
-    callback(badParametersResponse("Languages not found in request"));
+    callback(null, badParametersResponse("Languages not found in request"));
     return;
   }
 
@@ -43,7 +43,7 @@ exports.translate = (event, context, callback) => {
     })
     .catch(error => {
       response = failedDependencyResponse(error);
-      callback(response);
+      callback(null, response);
     });
 
     return;

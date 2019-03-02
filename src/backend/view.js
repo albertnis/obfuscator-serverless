@@ -11,7 +11,7 @@ const template = (title, content = "") => {
     <div class="content">
         <div id="app" class="wrap-inner">${content}</div>
     </div>
-    <script src="static/frontend-output.js"> </script>
+    <script src="static/client.js"> </script>
   </body>
 </html>`
 

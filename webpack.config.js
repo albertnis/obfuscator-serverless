@@ -7,7 +7,7 @@ const frontend = {
   devtool: 'inline-source-map',
   output: {
     path: path.resolve(__dirname, "static"),
-    filename: "frontend-output.js"
+    filename: "client.js"
   },
   module: {
     rules: [
@@ -39,8 +39,8 @@ const backend = {
     backend: "./src/backend/backend.js"
   },
   output: {
-    path: path.resolve(__dirname, "src/backend"),
-    filename: "backend-output.js",
+    path: path.resolve(__dirname, "src/backend/dist"),
+    filename: "[name].js",
     libraryTarget: 'commonjs'
   },
   target: 'node',
@@ -83,4 +83,53 @@ const backend = {
   }
 };
 
-module.exports = [frontend, backend];
+const server = {
+  entry: {
+    server: "./src/functions/server/server.js"
+  },
+  output: {
+    path: path.resolve(__dirname, "src/functions/server/dist"),
+    filename: "[name].js",
+    libraryTarget: 'commonjs'
+  },
+  target: 'node',
+  node: {
+    __dirname: false,
+  },
+  externals: [
+    /^(?!\.|\/).+/i
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use:
+        {
+          loader: "babel-loader"
+        }
+      },
+      {
+        test: /\.node$/,
+        exclude: /node_modules/,
+        use:
+        {
+          loader: "node-loader"
+        }
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use:
+        {
+          loader: "ts-loader"
+        }
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx']
+  }
+};
+
+module.exports = [frontend, backend, server];

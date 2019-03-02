@@ -9,12 +9,14 @@ provider:
 
 functions:
   server:
-    handler: src/backend/serverlessAdapter.server
+    handler: src/functions/server/dist/server.server
     events:
-      - http: ANY /
-      - http: ANY /{proxy+}
+      - http:
+          path: /
+          method: get
+          cors: true
   translate:
-    handler: src/functions/translate/handler.translate
+    handler: src/functions/translate/translate.translate
     events:
       - http:
           path: translate

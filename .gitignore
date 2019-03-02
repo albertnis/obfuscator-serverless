@@ -6,4 +6,5 @@ jspm_packages
 .serverless
 
 # Transpile output
-*-output.js
+dist
+static/client.js

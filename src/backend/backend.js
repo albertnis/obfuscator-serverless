@@ -20,9 +20,7 @@ if (environmentConfig.ServeStatic) {
 app.disable("x-powered-by")
 app.listen(process.env.PORT || 3000)
 
-let initialState = {
-  isFetching: false
-}
+import initialState from "./initialState"
 
 import ssr from "./ServerClient"
 

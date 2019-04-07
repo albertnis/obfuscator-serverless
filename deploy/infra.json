@@ -246,6 +246,7 @@
     },
     "APIGatewayTranslateMethod": {
       "Type": "AWS::ApiGateway::Method",
+      "DependsOn": "APIGatewayTranslateResource",
       "Properties": {
         "AuthorizationType": "NONE",
         "HttpMethod": "GET",

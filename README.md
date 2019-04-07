@@ -31,11 +31,12 @@ While the start script is running, changes to the frontend will require a browse
     npm run build-prod
     ```
 
-1. Install serverless
+1. Package functions
     ```bash
-    npm i -G serverless
+    deploy/package.sh
     ```
 
-1. Deploy with serverless
+1. Deploy
     ```bash
-    serverless deploy -v
+    deploy/deploy.sh
+    ```

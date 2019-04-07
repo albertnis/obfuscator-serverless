@@ -38,6 +38,31 @@
         ]
       }
     },
+    "ServerLambdaRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Path": "/",
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+        ]
+      }
+    },
     "StaticSiteRole": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -131,10 +156,92 @@
         "Principal": "apigateway.amazonaws.com"
       }
     },
+    "ServerLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "FunctionsBucketName"
+          },
+          "S3Key": "server.zip"
+        },
+        "Handler": "server.server",
+        "Role": {
+          "Fn::GetAtt": [
+            "ServerLambdaRole",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs8.10",
+        "MemorySize": 256,
+        "Timeout": 5,
+        "Environment": {
+          "Variables": {
+            "stage": "prod"
+          }
+        }
+      }
+    },
+    "ServerLambdaPermission": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Ref": "ServerLambdaFunction"
+        },
+        "Principal": "apigateway.amazonaws.com"
+      }
+    },
     "APIGatewayRestApi": {
       "Type": "AWS::ApiGateway::RestApi",
       "Properties": {
         "Name": "obfuscator"
+      }
+    },
+    "APIGatewayServerMethod": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "GET",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ServerLambdaFunction.Arn}/invocations"
+          }
+        },
+        "MethodResponses": [
+          {
+            "StatusCode": "200"
+          },
+          {
+            "StatusCode": "404"
+          }
+        ],
+        "ResourceId": {
+          "Fn::GetAtt": [
+            "APIGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "RestApiId": {
+          "Ref": "APIGatewayRestApi"
+        }
+      }
+    },
+    "APIGatewayTranslateResource": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "APIGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "RestApiId": {
+          "Ref": "APIGatewayRestApi"
+        },
+        "PathPart": "translate"
       }
     },
     "APIGatewayTranslateMethod": {
@@ -168,10 +275,7 @@
           "method.request.querystring.language3": true
         },
         "ResourceId": {
-          "Fn::GetAtt": [
-            "APIGatewayRestApi",
-            "RootResourceId"
-          ]
+          "Ref": "APIGatewayTranslateResource"
         },
         "RestApiId": {
           "Ref": "APIGatewayRestApi"
@@ -239,7 +343,7 @@
     },
     "APIGatewayProdDeployment": {
       "Type": "AWS::ApiGateway::Deployment",
-      "DependsOn": ["APIGatewayStaticMethod", "APIGatewayTranslateMethod"],
+      "DependsOn": ["APIGatewayStaticMethod", "APIGatewayTranslateMethod", "APIGatewayServerMethod"],
       "Properties": {
         "RestApiId": {
           "Ref": "APIGatewayRestApi"

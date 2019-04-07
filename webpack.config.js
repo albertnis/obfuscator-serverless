@@ -1,5 +1,6 @@
 const path = require("path");
 
+// Frontend - bundle for client
 const frontend = {
   entry: {
     frontend: "./src/frontend/Client.tsx",
@@ -34,6 +35,7 @@ const frontend = {
   }
 };
 
+// Backend - output for running as server (node backend.js)
 const backend = {
   entry: {
     backend: "./src/backend/backend.js"
@@ -83,6 +85,7 @@ const backend = {
   }
 };
 
+// Server - Serverless-Side Rendering provider. Function version of backend.js
 const server = {
   entry: {
     server: "./src/functions/server/server.js"
@@ -96,9 +99,6 @@ const server = {
   node: {
     __dirname: false,
   },
-  externals: [
-    /^(?!\.|\/).+/i
-  ],
   module: {
     rules: [
       {

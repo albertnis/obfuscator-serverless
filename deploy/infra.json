@@ -1,0 +1,298 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Parameters": {
+    "FunctionsBucketName": {
+      "Type": "String",
+      "Description": "Name of S3 bucket containing Lambda function code."
+    },
+    "DomainName": {
+      "Type": "String",
+      "Description": "URL to use for API Gateway e.g. obfuscator.example.com.",
+      "Default": "obfuscator.albertnis.com"
+    }
+  },
+  "Resources": {
+    "TranslateLambdaRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Path": "/",
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/TranslateReadOnly",
+          "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+        ]
+      }
+    },
+    "StaticSiteRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "apigateway.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Path": "/",
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+        ]
+      }
+    },
+    "SiteBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "AccessControl": "PublicRead"
+      }
+    },
+    "SiteBucketPolicy": {
+      "Type": "AWS::S3::BucketPolicy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "PublicReadGetObject",
+              "Effect": "Allow",
+              "Principal": "*",
+              "Action": [
+                "s3:GetObject"
+              ],
+              "Resource": [
+                {
+                  "Fn::Sub": "${SiteBucket.Arn}/*"
+                }
+              ]
+            }
+          ]
+        },
+        "Bucket": {
+          "Ref": "SiteBucket"
+        }
+      }
+    },
+    "TranslateLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "FunctionsBucketName"
+          },
+          "S3Key": "translate.zip"
+        },
+        "Handler": "translate.translate",
+        "Role": {
+          "Fn::GetAtt": [
+            "TranslateLambdaRole",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs8.10",
+        "MemorySize": 256,
+        "Timeout": 5,
+        "Environment": {
+          "Variables": {
+            "stage": "prod"
+          }
+        }
+      }
+    },
+    "TranslateLambdaPermission": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Ref": "TranslateLambdaFunction"
+        },
+        "Principal": "apigateway.amazonaws.com"
+      }
+    },
+    "APIGatewayRestApi": {
+      "Type": "AWS::ApiGateway::RestApi",
+      "Properties": {
+        "Name": "obfuscator"
+      }
+    },
+    "APIGatewayTranslateMethod": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "GET",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${TranslateLambdaFunction.Arn}/invocations"
+          }
+        },
+        "MethodResponses": [
+          {
+            "StatusCode": "200"
+          },
+          {
+            "StatusCode": "400"
+          },
+          {
+            "StatusCode": "424"
+          }
+        ],
+        "RequestParameters": {
+          "method.request.querystring.text": true,
+          "method.request.querystring.language0": true,
+          "method.request.querystring.language1": true,
+          "method.request.querystring.language2": true,
+          "method.request.querystring.language3": true
+        },
+        "ResourceId": {
+          "Fn::GetAtt": [
+            "APIGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "RestApiId": {
+          "Ref": "APIGatewayRestApi"
+        }
+      }
+    },
+    "APIGatewayStaticResource": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "APIGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "RestApiId": {
+          "Ref": "APIGatewayRestApi"
+        },
+        "PathPart": "{proxy+}"
+      }
+    },
+    "APIGatewayStaticMethod": {
+      "Type": "AWS::ApiGateway::Method",
+      "DependsOn": "APIGatewayStaticResource",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "ANY",
+        "Integration": {
+          "IntegrationHttpMethod": "ANY",
+          "Type": "HTTP_PROXY",
+          "Uri": {
+            "Fn::Sub": "http://s3-${AWS::Region}.amazonaws.com/${SiteBucket}/{proxy}"
+          },
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200"
+            }
+          ],
+          "RequestParameters": {
+            "integration.request.path.proxy": "method.request.path.proxy"
+          },
+          "PassthroughBehavior": "WHEN_NO_MATCH"
+        },
+        "MethodResponses": [
+          {
+            "StatusCode": "200"
+          },
+          {
+            "StatusCode": "403"
+          },
+          {
+            "StatusCode": "404"
+          }
+        ],
+        "ResourceId": {
+          "Ref": "APIGatewayStaticResource"
+        },
+        "RestApiId": {
+          "Ref": "APIGatewayRestApi"
+        },
+        "RequestParameters": {
+          "method.request.path.proxy": true
+        }
+      }
+    },
+    "APIGatewayProdDeployment": {
+      "Type": "AWS::ApiGateway::Deployment",
+      "DependsOn": ["APIGatewayStaticMethod", "APIGatewayTranslateMethod"],
+      "Properties": {
+        "RestApiId": {
+          "Ref": "APIGatewayRestApi"
+        },
+        "StageName": "prod",
+        "StageDescription": {
+          "StageName": "prod"
+        }
+      }
+    },
+    "APIGatewayProdBasePathMapping": {
+      "Type": "AWS::ApiGateway::BasePathMapping",
+      "Properties": {
+        "DomainName": {
+          "Ref": "APIGatewayDomainName"
+        },
+        "RestApiId": {
+          "Ref": "APIGatewayRestApi"
+        },
+        "Stage": "prod"
+      }
+    },
+    "APIGatewayDomainName": {
+      "Type": "AWS::ApiGateway::DomainName",
+      "Properties": {
+        "DomainName": {
+          "Ref": "DomainName"
+        },
+        "CertificateArn": "arn:aws:acm:us-east-1:183333128222:certificate/70c013b9-a830-42c6-bea7-36317132aac1"
+      }
+    }
+  },
+  "Outputs": {
+    "SiteBucketName": {
+      "Description": "Name of bucket for static site assets",
+      "Value": {
+        "Ref": "SiteBucket"
+      },
+      "Export": {
+        "Name": "ObfuscatorSiteBucketName"
+      }
+    },
+    "APIDistributedDomainName": {
+      "Description": "The Amazon CloudFront distribution domain name that's mapped to the custom domain name",
+      "Value": {
+        "Fn::GetAtt": [
+          "APIGatewayDomainName",
+          "DistributionDomainName"
+        ]
+      },
+      "Export": {
+        "Name": "ObfuscatorAPIDistributedDomainName"
+      }
+    }
+  }
+}

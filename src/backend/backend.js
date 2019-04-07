@@ -13,9 +13,7 @@ if (environmentConfig.VerboseServer) {
   app.use(morgan('tiny'))
 }
 
-if (environmentConfig.ServeStatic) {
-  app.use("/static", express.static(path.join(__dirname, "../../static")))
-}
+app.use("/static", express.static("static"))
 
 app.disable("x-powered-by")
 app.listen(process.env.PORT || 3000)

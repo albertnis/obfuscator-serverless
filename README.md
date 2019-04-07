@@ -10,7 +10,7 @@
     npm start
     ```
 
-1. Start the backend with Node
+1. In a different terminal instance, start the backend with Node
     ```bash
     npm run server
     ```
@@ -36,7 +36,7 @@ While the start script is running, changes to the frontend will require a browse
     deploy/package.sh
     ```
 
-1. Deploy
+1. Deploy to AWS
     ```bash
     deploy/deploy.sh
     ```

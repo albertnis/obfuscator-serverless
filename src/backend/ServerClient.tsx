@@ -3,8 +3,8 @@ import { renderToString } from "react-dom/server"
 
 import App from "../frontend/components/App"
 
-const ssr = (initialState) => {
-  let content = renderToString(<App />)
+const ssr = (initialState: any) => {
+  let content = renderToString(<App message="Server-side rendered" />)
   return content
 }
 

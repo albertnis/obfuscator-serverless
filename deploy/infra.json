@@ -9,6 +9,16 @@
       "Type": "String",
       "Description": "URL to use for API Gateway e.g. obfuscator.example.com.",
       "Default": "obfuscator.albertnis.com"
+    },
+    "ServerZipName": {
+      "Type": "String",
+      "Description": "S3 key of server code zip file in functions bucket.",
+      "Default": "server.zip"
+    },
+    "TranslateZipName": {
+      "Type": "String",
+      "Description": "S3 key of translate code zip file in functions bucket.",
+      "Default": "translate.zip"
     }
   },
   "Resources": {
@@ -127,7 +137,9 @@
           "S3Bucket": {
             "Ref": "FunctionsBucketName"
           },
-          "S3Key": "translate.zip"
+          "S3Key": {
+            "Ref": "TranslateZipName"
+          }
         },
         "Handler": "translate.translate",
         "Role": {
@@ -163,7 +175,9 @@
           "S3Bucket": {
             "Ref": "FunctionsBucketName"
           },
-          "S3Key": "server.zip"
+          "S3Key": {
+            "Ref": "ServerZipName"
+          }
         },
         "Handler": "server.server",
         "Role": {

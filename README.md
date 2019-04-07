@@ -33,10 +33,12 @@ While the start script is running, changes to the frontend will require a browse
 
 1. Package functions
     ```bash
-    deploy/package.sh
+    cd deploy
+    ./package.sh
     ```
 
-1. Deploy to AWS
+1. Deploy to AWS, passing name of deployment bucket to be created
     ```bash
-    deploy/deploy.sh
+    cd deploy
+    ./deploy.sh unique-deployment-bucket-name
     ```

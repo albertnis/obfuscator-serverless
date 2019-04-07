@@ -1,6 +1,12 @@
 # Exit on fail
 set -e
 
+if [ -z $1 ]
+then
+    echo "Deployment bucket name not specified. Exiting..."
+    exit 2
+fi
+
 echo -e "\e[32m-- Deployment commenced --\e[39m"
 
 # 1. CF Create buckets
@@ -16,6 +22,8 @@ fi
 
 # 2. Copy function zips to functions bucket
 echo -e "\e[32mUploading function code...\e[39m"
+TRANSLATE_ZIP_NAME=$(basename $(ls ../dist/translate*.zip))
+SERVER_ZIP_NAME=$(basename $(ls ../dist/server*.zip))
 aws.cmd s3 cp ../dist/ s3://$1/ --recursive
 
 # 3. CF Create everything else
@@ -26,7 +34,10 @@ aws.cmd cloudformation deploy \
     --force-upload \
     --stack-name obfuscator-stack \
     --capabilities CAPABILITY_IAM \
-    --parameter-overrides FunctionsBucketName=$1 \
+    --parameter-overrides \
+        FunctionsBucketName=$1 \
+        ServerZipName=$SERVER_ZIP_NAME \
+        TranslateZipName=$TRANSLATE_ZIP_NAME \
     --no-fail-on-empty-changeset
 
 # 4. Get static site bucket name

@@ -5,7 +5,8 @@ const template = (title, content = "") => {
   <head>
     <meta charset="utf-8">
     <title> ${title} </title>
-    <link href="assets/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
+    <link href="static/style.css" rel="stylesheet">
   </head>
   <body>
     <div class="content">

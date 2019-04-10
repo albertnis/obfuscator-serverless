@@ -4,7 +4,7 @@ import { renderToString } from "react-dom/server"
 import App from "../frontend/components/App"
 
 const ssr = (initialState: any) => {
-  let content = renderToString(<App message="Server-side rendered" />)
+  let content = renderToString(<App message="Lambda-rendered" />)
   return content
 }
 

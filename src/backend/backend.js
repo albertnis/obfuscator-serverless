@@ -24,7 +24,7 @@ import ssr from "./ServerClient"
 
 app.get("/", (req, res) => {
   const content = ssr(initialState)
-  const response = view("Server Rendered Page", content)
+  const response = view("Obfuscator", content)
   res.setHeader("Cache-Control", "assets, max-age=604800")
   res.send(response)
 })

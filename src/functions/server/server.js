@@ -4,7 +4,7 @@ import ssr from "../../backend/ServerClient"
 
 export const server = (event, context, callback) => {
   const renderOutput = ssr(initialState)
-  const content = view("Serverless Rendered Page", renderOutput)
+  const content = view("Obfuscator", renderOutput)
 
   callback(null, {
     statusCode: 200,

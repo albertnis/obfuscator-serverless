@@ -1,5 +1,5 @@
 import React from 'react'
 
 export default ({ message }: { message: string }) => (
-  <div>{message}</div>
+  <div className="appPlaceholder"><p>{message}</p></div>
 )

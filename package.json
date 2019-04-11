@@ -7,8 +7,8 @@
     "functions": "json-server --watch local-data/functions.json --port 3001",
     "server": "node src/backend/dist/backend.js",
     "start": "webpack --config webpack.config.js --mode development --watch",
+    "dev-server": "webpack-dev-server --config webpack.config.js",
     "build-dev": "webpack --config webpack.config.js --mode development",
-    "build-stage": "webpack --config webpack.config.js --mode stage",
     "build-prod": "webpack --config webpack.config.js --mode production"
   },
   "author": "Albert Nisbet",

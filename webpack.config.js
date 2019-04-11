@@ -10,6 +10,10 @@ const frontend = {
     path: path.resolve(__dirname, "static"),
     filename: "client.js"
   },
+  devServer: {
+    contentBase: path.resolve(__dirname, '.'),
+    port: 4000
+  },
   module: {
     rules: [
       {

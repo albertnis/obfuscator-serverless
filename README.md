@@ -5,12 +5,34 @@
     npm i
     ```
 
-1. Build and watch frontend and backend with webpack
+1. Run mocked function endpoints
+    ```bash
+    npm run functions
+    ```
+
+1. Run in either front-end or full-stack mode, as below:
+
+### Front-end
+
+If you want to develop the frontend with hot-reloading, dev-server is your best bet. Server-side rendering will not occur.
+
+4. In a second terminal instance, run webpack dev server
+    ```bash
+    npm run dev-server
+    ```
+
+Then go to localhost:3000. Changes to code will trigger component reloads.
+
+### Full-stack
+
+The full stack can also be tested.
+
+4. In a second terminal instance, build and watch frontend and backend with webpack
     ```bash
     npm start
     ```
 
-1. In a different terminal instance, start the backend with Node
+5. In a third terminal instance, start the backend with Node
     ```bash
     npm run server
     ```

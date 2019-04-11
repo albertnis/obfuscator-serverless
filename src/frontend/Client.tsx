@@ -3,4 +3,4 @@ import { hydrate } from "react-dom"
 
 import App from "./components/App"
 
-hydrate(<App message="Now client-rendered" />, document.getElementById("app"))
+hydrate(<App message="Take the following English phrase:" />, document.getElementById("app"))

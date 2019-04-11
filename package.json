@@ -7,7 +7,7 @@
     "functions": "json-server --watch local-data/functions.json --port 3001",
     "server": "node src/backend/dist/backend.js",
     "start": "webpack --config webpack.config.js --mode development --watch",
-    "dev-server": "webpack-dev-server --config webpack.config.js",
+    "dev-server": "webpack-dev-server --config webpack.config.js --mode development",
     "build-dev": "webpack --config webpack.config.js --mode development",
     "build-prod": "webpack --config webpack.config.js --mode production"
   },
@@ -17,6 +17,7 @@
     "express": "^4.16.4",
     "morgan": "^1.9.1",
     "react": "^16.8.3",
+    "react-contenteditable": "^3.2.6",
     "react-dom": "^16.8.3",
     "react-router": "^4.3.1",
     "redux": "^4.0.1",

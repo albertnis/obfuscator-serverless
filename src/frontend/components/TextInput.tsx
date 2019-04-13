@@ -1,25 +1,38 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import ContentEditable from 'react-contenteditable'
 
-type TextInputState = {
+export interface TextInputState {
   content: string
 }
 
-export default class extends React.Component {
-  state: TextInputState
+export interface TextInputStatefulProps {
+  content: string
+}
 
-  constructor(props: {}) {
+export interface TextInputDispatchProps {
+  onChange(text: string): void
+}
+
+export type TextInputProps = TextInputStatefulProps & TextInputDispatchProps
+
+export default class extends React.Component<TextInputProps, TextInputState> {
+
+  constructor(props: TextInputProps) {
     super(props)
     this.state = { content: 'yeet' }
   }
 
-  handleChange = (event: any) => {
-    this.setState({content: event.target.value})
+  handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    this.props.onChange(event.target.value)
   }
 
   render() {
+    var e = this.handleChange
     return (
-      <ContentEditable html={this.state.content} onChange={(e: any) => this.handleChange(e)} />
+      <input
+        type="text" value={this.props.content}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => this.handleChange(e)}
+      />
     )
   }
 }

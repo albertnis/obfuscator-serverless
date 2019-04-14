@@ -6,6 +6,7 @@ export type AppState = {
 
 export const initialState: AppState = {
   input: {
-    text: 'initial'
+    text: 'indexinitial',
+    languages: []
   }
 }

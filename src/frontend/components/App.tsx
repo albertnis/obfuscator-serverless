@@ -1,10 +1,10 @@
 import React from 'react'
 
-import LanguageSelect from './LanguageSelect'
 import TextInputContainer from '../containers/TextInputContainer'
+import LanguageSelectContainer from '../containers/LanguageSelectContainer';
 
 export default ({ message }: { message: string }) => (
   <div className="appPlaceholder">
-  Take the following <LanguageSelect languageCode="en" /> phrase: <TextInputContainer />
+  Take the following <LanguageSelectContainer /> phrase: <TextInputContainer />
   </div>
 )

@@ -1,5 +1,3 @@
-import React from 'react'
-
 import TextInput, { TextInputDispatchProps, TextInputStatefulProps } from '../components/TextInput'
 import { AppState } from '../store';
 import { changeText } from '../store/input/actions';

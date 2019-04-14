@@ -1,5 +1,8 @@
+import { Language } from '../../constants/languages'
+
 export interface InputState {
-    text: string
+    text: string,
+    languages: Language[]
 }
 
 export const CHANGE_TEXT = 'CHANGE_TEXT'
@@ -9,4 +12,14 @@ interface TextChangedAction {
     payload: string
 }
 
-export type AnyInputAction = TextChangedAction
+export const CHANGE_LANGUAGES = 'CHANGE_LANGUAGE'
+
+interface LanguagesChangedAction {
+    type: typeof CHANGE_LANGUAGES
+    payload: {
+        newLanguage: Language,
+        index: number
+    }
+}
+
+export type AnyInputAction = TextChangedAction | LanguagesChangedAction

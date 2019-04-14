@@ -22,7 +22,7 @@ export default class extends React.Component<TextInputProps, TextInputState> {
     this.state = { content: 'yeet' }
   }
 
-  handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     this.props.onChange(event.target.value)
   }
 
@@ -31,7 +31,7 @@ export default class extends React.Component<TextInputProps, TextInputState> {
     return (
       <input
         type="text" value={this.props.content}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => this.handleChange(e)}
+        onChange={e => this.handleChange(e)}
       />
     )
   }

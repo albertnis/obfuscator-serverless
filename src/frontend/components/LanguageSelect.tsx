@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react'
 
-import AllLanguages, { Language } from '../constants/languages'
+import AllLanguages, { Language } from '../../types'
 import { render } from 'react-dom';
 
 export interface LanguageSelectStatefulProps {

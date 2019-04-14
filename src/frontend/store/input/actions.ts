@@ -1,5 +1,5 @@
 import { CHANGE_TEXT, CHANGE_LANGUAGES, AnyInputAction } from './types'
-import { Language } from '../../constants/languages';
+import { Language } from '../../../types';
 
 export const changeText = (newText: string): AnyInputAction => ({
     type: CHANGE_TEXT,

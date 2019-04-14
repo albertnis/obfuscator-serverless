@@ -1,4 +1,4 @@
-import { Language } from '../../constants/languages'
+import { Language } from '../../../types'
 
 export interface InputState {
     text: string,

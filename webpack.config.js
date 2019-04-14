@@ -136,4 +136,53 @@ const server = {
   }
 };
 
-module.exports = [frontend, backend, server];
+// Translate - Translate API
+const translate = {
+  entry: {
+    translate: "./src/functions/translate/translate.js"
+  },
+  output: {
+    path: path.resolve(__dirname, "src/functions/translate/dist"),
+    filename: "[name].js",
+    libraryTarget: 'commonjs'
+  },
+  target: 'node',
+  node: {
+    __dirname: false,
+  },
+  // AWS sdk is available externally in Lambda nodejs runtime
+  externals: ['aws-sdk'],
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use:
+        {
+          loader: "babel-loader"
+        }
+      },
+      {
+        test: /\.node$/,
+        exclude: /node_modules/,
+        use:
+        {
+          loader: "node-loader"
+        }
+      },
+      {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use:
+        {
+          loader: "ts-loader"
+        }
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['.js', '.ts']
+  }
+};
+
+module.exports = [frontend, backend, server, translate];

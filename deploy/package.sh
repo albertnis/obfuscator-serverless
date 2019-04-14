@@ -2,7 +2,7 @@ GIT_HASH=$(git rev-parse --short HEAD)
 
 # 1. Copy files temporarily
 cp ../src/functions/server/dist/server.js ./server.js
-cp ../src/functions/translate/translate.js ./translate.js
+cp ../src/functions/translate/dist/translate.js ./translate.js
 
 # 3. Create build directory
 mkdir -p ../dist

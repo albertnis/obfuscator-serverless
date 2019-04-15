@@ -16,37 +16,35 @@ const response = (responseObj: any, code: number): LambdaResponse => {
     headers: {
       "Access-Control-Allow-Origin": "*" // Enable CORS for all responses (for now)
     },
-    body: JSON.stringify(responseObj)
+    body: typeof(responseObj) === "string" ? responseObj : JSON.stringify(responseObj)
   }
 }
 
-export const translate = (event: any, context: any, callback: any) => {
+export const translate = async (event: any, context: any, callback: any) => {
   let validationResponse = validateEvent(event, MAX_LANGUAGES)
 
   if (!(validationResponse.Valid)) {
     callback(null, badParametersResponse(validationResponse.StatusMessage))
     return
   }
-  
+
   var translateClient = new AWS.Translate()
-  
-  let { text, languageCodes } = validationResponse.Result
-  
-  let responses: TranslateTextResponse[] = []
-  for (let i = 0; i < (languageCodes.length - 1); i++) {
-    runTranslation(translateClient, text, languageCodes[i], languageCodes[i])
-      .then((nextResponse: TranslateTextResponse): void => {
-        responses = [...responses, nextResponse]
-      })
-      .catch((error: AWSError) => {
-        callback(null, failedDependencyResponse(error))
-      })
-  }
-  callback(null, successResponse(responses))
+  let { text, languageCodes: langs } = validationResponse.Result
+  let result = await runCyclicTranslation(translateClient, text, langs)
+  callback(null, successResponse(result))
   return
 }
 
-var runTranslation = (client: AWS.Translate, text: string, from: ValidLanguageCode, to: ValidLanguageCode) => {
+var runCyclicTranslation = async (client: AWS.Translate, text: string, languageCodes: ValidLanguageCode[]) => {
+  let responses = [await runTranslation(client, text, languageCodes[0], languageCodes[1])]
+  for (let i = 1; i < (languageCodes.length - 1); i++) {
+    let ithResponse = await runTranslation(client, responses[i - 1].TranslatedText, languageCodes[i], languageCodes[i + 1])
+    responses = [...responses, ithResponse]
+  }
+  return responses
+}
+
+var runTranslation = async (client: AWS.Translate, text: string, from: ValidLanguageCode, to: ValidLanguageCode) => {
   var params: TranslateTextRequest = {
     SourceLanguageCode: from,
     TargetLanguageCode: to,

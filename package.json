@@ -4,6 +4,7 @@
   "description": "",
   "main": "handler.js",
   "scripts": {
+    "test": "jest",
     "functions": "json-server --watch local-data/functions.json --port 3001",
     "server": "node src/backend/dist/backend.js",
     "start": "webpack --config webpack.config.js --mode development --watch",

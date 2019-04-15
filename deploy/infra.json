@@ -284,10 +284,7 @@
         ],
         "RequestParameters": {
           "method.request.querystring.text": true,
-          "method.request.querystring.language0": true,
-          "method.request.querystring.language1": true,
-          "method.request.querystring.language2": true,
-          "method.request.querystring.language3": true
+          "method.request.querystring.languageCodes": true
         },
         "ResourceId": {
           "Ref": "APIGatewayTranslateResource"

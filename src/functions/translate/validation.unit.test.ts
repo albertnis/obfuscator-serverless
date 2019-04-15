@@ -3,7 +3,9 @@ import { validateEvent } from "./validation";
 test('parses well-formed request', () => {
   let event = {
     "queryStringParameters": {
-      "text": "testing",
+      "text": "testing"
+    },
+    "multiValueQueryStringParameters": {
       "languages": ["en", "fr", "es"]
     }
   }
@@ -34,7 +36,8 @@ test('gracefully fails when no query parameters', () => {
 
 test('gracefully fails when query parameters is array', () => {
   let event = {
-    "queryStringParameters": ['1', '2']
+    "queryStringParameters": ['1', '2'],
+    "multiValueQueryStringParameters": ['1', '2']
   }
 
   let result = validateEvent(event, 5)
@@ -48,7 +51,8 @@ test('gracefully fails when query parameters is array', () => {
 
 test('gracefully fails when no text present', () => {
   let event = {
-    "queryStringParameters": {
+    "queryStringParameters": {},
+    "multiValueQueryStringParameters": {
       "languages": ["en", "fr", "es"]
     }
   }
@@ -66,7 +70,8 @@ test('gracefully fails when languages not present', () => {
   let event = {
     "queryStringParameters": {
       "text": "testing"
-    }
+    },
+    "multiValueQueryStringParameters": {}
   }
 
   let result = validateEvent(event, 5)
@@ -81,8 +86,10 @@ test('gracefully fails when languages not present', () => {
 test('gracefully fails when languages is not array', () => {
   let event = {
     "queryStringParameters": {
-      "text": "testing",
-      "languages": {"1": "en", "2": "fr", "3": "es"}
+      "text": "testing"
+    },
+    "multiValueQueryStringParameters": {
+      "languages": { "1": "en", "2": "fr", "3": "es" }
     }
   }
 
@@ -98,7 +105,9 @@ test('gracefully fails when languages is not array', () => {
 test('gracefully fails when too few languages', () => {
   let event = {
     "queryStringParameters": {
-      "text": "testing",
+      "text": "testing"
+    },
+    "multiValueQueryStringParameters": {
       "languages": ["en"]
     }
   }
@@ -115,8 +124,10 @@ test('gracefully fails when too few languages', () => {
 test('gracefully fails when too many languages', () => {
   let event = {
     "queryStringParameters": {
-      "text": "testing",
-      "languages": ["en", "fr", "es"]
+      "text": "testing"
+    },
+    "multiValueQueryStringParameters": {
+      "languages": ["en", "fr", "es", "ja", "fi", "de"]
     }
   }
 
@@ -132,7 +143,9 @@ test('gracefully fails when too many languages', () => {
 test('gracefully fails when languages invalid', () => {
   let event = {
     "queryStringParameters": {
-      "text": "testing",
+      "text": "testing"
+    },
+    "multiValueQueryStringParameters": {
       "languages": ["en", "fr", "xx"]
     }
   }

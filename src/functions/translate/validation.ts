@@ -2,7 +2,9 @@ import { ValidationResponse } from './types';
 import { ValidLanguageCode } from '../../types'
 
 export const validateEvent = (event: any, maxLanguages: number): ValidationResponse => {
-  if (!('queryStringParameters' in event)) {
+  console.log("Validating event")
+  console.log(event)
+  if (!('queryStringParameters' in event) || !('multiValueQueryStringParameters' in event)) {
     return {
       Valid: false,
       StatusMessage: 'No query string parameters specified',
@@ -11,7 +13,9 @@ export const validateEvent = (event: any, maxLanguages: number): ValidationRespo
   }
 
   let qsp = event.queryStringParameters
-  if (Array.isArray(qsp)) {
+  let mvqsp = event.multiValueQueryStringParameters
+
+  if (Array.isArray(qsp) || Array.isArray(mvqsp)) {
     return {
       Valid: false,
       StatusMessage: 'Query string parameters specified incorrectly',
@@ -28,8 +32,8 @@ export const validateEvent = (event: any, maxLanguages: number): ValidationRespo
   }
 
   if (
-    !('languages' in qsp
-      && Array.isArray(qsp['languages'])
+    !('languages' in mvqsp
+      && Array.isArray(mvqsp['languages'])
     )
   ) {
     return {
@@ -39,7 +43,7 @@ export const validateEvent = (event: any, maxLanguages: number): ValidationRespo
     }
   }
 
-  if (qsp['languages'].length < 2) {
+  if (mvqsp['languages'].length < 2) {
     return {
       Valid: false,
       StatusMessage: 'At least 2 languages must be specified',
@@ -47,7 +51,7 @@ export const validateEvent = (event: any, maxLanguages: number): ValidationRespo
     }
   }
 
-  if (qsp['languages'].length > maxLanguages) {
+  if (mvqsp['languages'].length > maxLanguages) {
     return {
       Valid: false,
       StatusMessage: `At most ${maxLanguages} languages must be specified`,
@@ -55,7 +59,7 @@ export const validateEvent = (event: any, maxLanguages: number): ValidationRespo
     }
   }
 
-  let allLangsValid = qsp['languages'].every((l: any): boolean => {
+  let allLangsValid = mvqsp['languages'].every((l: any): boolean => {
     return (Object.keys(ValidLanguageCode).indexOf(l) > -1)
   })
 
@@ -72,7 +76,7 @@ export const validateEvent = (event: any, maxLanguages: number): ValidationRespo
     StatusMessage: null,
     Result: {
       text: qsp.text,
-      languageCodes: qsp.languages
+      languageCodes: mvqsp.languages
     }
   }
 }

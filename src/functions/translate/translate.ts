@@ -1,4 +1,4 @@
-import AWS, { AWSError, Lambda } from 'aws-sdk'
+import AWS, { AWSError } from 'aws-sdk'
 import { ValidLanguageCode } from '../../types'
 import { LambdaResponse } from './types'
 import { validateEvent } from './validation';
@@ -14,9 +14,9 @@ const response = (responseObj: any, code: number): LambdaResponse => {
   return {
     statusCode: code,
     headers: {
-      "Access-Control-Allow-Origin": "*" // Enable CORS for all responses (for now)
+      'Access-Control-Allow-Origin': '*' // Enable CORS for all responses (for now)
     },
-    body: typeof(responseObj) === "string" ? responseObj : JSON.stringify(responseObj)
+    body: typeof(responseObj) === 'string' ? responseObj : JSON.stringify(responseObj)
   }
 }
 

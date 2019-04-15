@@ -2,7 +2,7 @@ import { ValidationResponse } from './types';
 import { ValidLanguageCode } from '../../types'
 
 export const validateEvent = (event: any, maxLanguages: number): ValidationResponse => {
-  console.log("Validating event")
+  console.log('Validating event')
   console.log(event)
   if (!('queryStringParameters' in event) || !('multiValueQueryStringParameters' in event)) {
     return {

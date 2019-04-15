@@ -1,4 +1,4 @@
-import { Language, ValidLanguageCode } from '../../types'
+import { ValidLanguageCode } from '../../types'
 
 export interface Request {
     text: string,

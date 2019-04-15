@@ -21,10 +21,6 @@ export enum ValidLanguageCode {
   tr = "tr"
 }
 
-export interface Language {
-  code: ValidLanguageCode
-}
-
 export const ValidLanguageNames: Record<ValidLanguageCode, string> = {
   ar: "Arabic",
   zh: "Chinese",

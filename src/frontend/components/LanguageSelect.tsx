@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react'
 
-import { ValidLanguageNames, Language, ValidLanguageCode } from '../../types'
+import { ValidLanguageNames, ValidLanguageCode } from '../../types'
 
 export interface LanguageSelectStatefulProps {
   languages: ValidLanguageCode[]

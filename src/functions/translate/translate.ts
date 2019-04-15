@@ -1,5 +1,5 @@
 import AWS, { AWSError, Lambda } from 'aws-sdk'
-import { Language, ValidLanguageCode } from '../../types'
+import { ValidLanguageCode } from '../../types'
 import { LambdaResponse } from './types'
 import { validateEvent } from './validation';
 import { TranslateTextResponse, TranslateTextRequest } from 'aws-sdk/clients/translate';

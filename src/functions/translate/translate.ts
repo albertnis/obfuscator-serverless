@@ -1,6 +1,6 @@
 import AWS, { AWSError, Lambda } from 'aws-sdk'
-import { Language } from '../../types'
-import { ValidationResponse, LambdaResponse } from './types'
+import { Language, ValidLanguageCode } from '../../types'
+import { LambdaResponse } from './types'
 import { validateEvent } from './validation';
 import { TranslateTextResponse, TranslateTextRequest } from 'aws-sdk/clients/translate';
 
@@ -27,60 +27,36 @@ export const translate = (event: any, context: any, callback: any) => {
     callback(null, badParametersResponse(validationResponse.StatusMessage))
     return
   }
-
-  let { text, languages } = validationResponse.Result
-
+  
   var translateClient = new AWS.Translate()
-
-  var result1, result2, result3, result4, response
-  runTranslation(translateClient, text, language0, language1)
-    .then(result => {
-      result1 = result
-      console.log(result)
-      return runTranslation(translateClient, result.TranslatedText, language1, language2)
-    })
-    .then(result => {
-      result2 = result
-      console.log(result)
-      return runTranslation(translateClient, result.TranslatedText, language2, language3)
-    })
-    .then(result => {
-      result3 = result
-      console.log(result)
-      return runTranslation(translateClient, result.TranslatedText, language3, language0)
-    })
-    .then(result => {
-      result4 = result
-      console.log(result)
-      callback(null, successResponse({ result1, result2, result3, result4 }))
-    })
-    .catch(error => {
-      response = failedDependencyResponse(error)
-      callback(null, response)
-    })
-
+  
+  let { text, languageCodes } = validationResponse.Result
+  
+  let responses: TranslateTextResponse[] = []
+  for (let i = 0; i < (languageCodes.length - 1); i++) {
+    runTranslation(translateClient, text, languageCodes[i], languageCodes[i])
+      .then((nextResponse: TranslateTextResponse): void => {
+        responses = [...responses, nextResponse]
+      })
+      .catch((error: AWSError) => {
+        callback(null, failedDependencyResponse(error))
+      })
+  }
+  callback(null, successResponse(responses))
   return
 }
 
-
-
-
-
-var runTranslation = (client, text, from, to) => {
+var runTranslation = (client: AWS.Translate, text: string, from: ValidLanguageCode, to: ValidLanguageCode) => {
   var params: TranslateTextRequest = {
     SourceLanguageCode: from,
     TargetLanguageCode: to,
     Text: text
   }
 
-  return new Promise((resolve, reject) => {
-    client.translateText(params, function (err: AWSError, data: TranslateTextResponse) {
-      if (err) reject(err, err.stack)
-      // an error occurred
-      else {
-        let { TargetLanguageCode, TranslatedText } = data
-        resolve({ TargetLanguageCode, TranslatedText }) // successful response
-      }
+  return new Promise<TranslateTextResponse>((resolve, reject) => {
+    client.translateText(params, (err: AWSError, data: TranslateTextResponse): void => {
+      if (err) reject(err)
+      else resolve(data)
     })
   })
 }

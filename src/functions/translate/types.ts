@@ -1,8 +1,8 @@
-import { Language } from '../../types'
+import { Language, ValidLanguageCode } from '../../types'
 
 export interface Request {
     text: string,
-    languages: Language[]
+    languageCodes: ValidLanguageCode[]
   }
 
 export interface ValidationResponse {

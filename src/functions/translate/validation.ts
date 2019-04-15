@@ -56,13 +56,13 @@ export const validateEvent = (event: any, maxLanguages: number): ValidationRespo
   }
 
   let allLangsValid = qsp['languages'].every((l: any): boolean => {
-    return (l as ValidLanguageCode) !== undefined
+    return (Object.keys(ValidLanguageCode).indexOf(l) > -1)
   })
 
   if (!allLangsValid) {
     return {
       Valid: false,
-      StatusMessage: `At least one invalid language detected`,
+      StatusMessage: 'At least one invalid language detected',
       Result: null
     }
   }

@@ -1,14 +1,13 @@
 import React, { ChangeEvent } from 'react'
 
-import AllLanguages, { Language } from '../../types'
-import { render } from 'react-dom';
+import { ValidLanguageNames, Language, ValidLanguageCode } from '../../types'
 
 export interface LanguageSelectStatefulProps {
-  languages: Language[]
+  languages: ValidLanguageCode[]
 }
 
 export interface LanguageSelectDispatchProps {
-  onChange(language: Language, index: number): void
+  onChange(language: ValidLanguageCode, index: number): void
 }
 
 export type LanguageSelectProps = LanguageSelectStatefulProps & LanguageSelectDispatchProps
@@ -16,20 +15,17 @@ export type LanguageSelectProps = LanguageSelectStatefulProps & LanguageSelectDi
 class LanguageSelect extends React.Component<LanguageSelectProps> {
 
   onChange = (event: ChangeEvent<HTMLSelectElement>, index: number): void => {
-    let selectedLanguage = AllLanguages.filter(l => 
-      l.code == event.target.value
-    )[0]
-
-    this.props.onChange(selectedLanguage, index)
+    let code = event.target.value as ValidLanguageCode
+    this.props.onChange(code, index)
   }
 
   render() {
     return (
       <span className="languageSelect">
         {this.props.languages.map((l, i) =>
-          <select value={l.code} key={i} onChange={(e) => this.onChange(e, i)}>
-            {AllLanguages.map((gl, gi) =>
-              <option value={gl.code} key={gi}>{gl.name}</option>
+          <select value={l} key={i} onChange={(e) => this.onChange(e, i)}>
+            {Object.keys(ValidLanguageCode).map((code) =>
+              <option value={code} key={code}>{ValidLanguageNames[code as ValidLanguageCode]}</option>
             )}
           </select>
         )}

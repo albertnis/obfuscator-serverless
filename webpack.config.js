@@ -139,7 +139,7 @@ const server = {
 // Translate - Translate API
 const translate = {
   entry: {
-    translate: "./src/functions/translate/translate.js"
+    translate: "./src/functions/translate/translate.ts"
   },
   output: {
     path: path.resolve(__dirname, "src/functions/translate/dist"),

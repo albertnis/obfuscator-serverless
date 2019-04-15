@@ -1,29 +1,49 @@
-export interface Language {
-    code: string,
-    name: string
+export enum ValidLanguageCode {
+  ar = "ar",
+  zh = "zh",
+  cs = "cs",
+  da = "da",
+  nl = "nl",
+  en = "en",
+  fi = "fi",
+  fr = "fr",
+  de = "de",
+  he = "he",
+  id = "id",
+  it = "it",
+  ja = "ja",
+  ko = "ko",
+  pl = "pl",
+  pt = "pt",
+  ru = "ru",
+  es = "es",
+  sv = "sv",
+  tr = "tr"
 }
 
-const languages: Language[] = [
-    { name: "Arabic", code: "ar" },
-    { name: "Chinese", code: "zh" },
-    { name: "Czech", code: "cs" },
-    { name: "Danish", code: "da" },
-    { name: "Dutch", code: "nl" },
-    { name: "English", code: "en" },
-    { name: "Finnish", code: "fi" },
-    { name: "French", code: "fr" },
-    { name: "German", code: "de" },
-    { name: "Hebrew", code: "he" },
-    { name: "Indonesian", code: "id" },
-    { name: "Italian", code: "it" },
-    { name: "Japanese", code: "ja" },
-    { name: "Korean", code: "ko" },
-    { name: "Polish", code: "pl" },
-    { name: "Portuguese", code: "pt" },
-    { name: "Russian", code: "ru" },
-    { name: "Spanish", code: "es" },
-    { name: "Swedish", code: "sv" },
-    { name: "Turkish", code: "tr" },
-]
+export interface Language {
+  code: ValidLanguageCode
+}
 
-export default languages
+export const ValidLanguageNames: Record<ValidLanguageCode, string> = {
+  ar: "Arabic",
+  zh: "Chinese",
+  cs: "Czech",
+  da: "Danish",
+  nl: "Dutch",
+  en: "English",
+  fi: "Finnish",
+  fr: "French",
+  de: "German",
+  he: "Hebrew",
+  id: "Indonesian",
+  it: "Italian",
+  ja: "Japanese",
+  ko: "Korean",
+  pl: "Polish",
+  pt: "Portuguese",
+  ru: "Russian",
+  es: "Spanish",
+  sv: "Swedish",
+  tr: "Turkish"
+}

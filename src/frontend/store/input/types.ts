@@ -1,8 +1,8 @@
-import { Language } from '../../../types'
+import { Language, ValidLanguageCode } from '../../../types'
 
 export interface InputState {
     text: string,
-    languages: Language[]
+    languages: ValidLanguageCode[]
 }
 
 export const CHANGE_TEXT = 'CHANGE_TEXT'
@@ -17,7 +17,7 @@ export const CHANGE_LANGUAGES = 'CHANGE_LANGUAGE'
 interface LanguagesChangedAction {
     type: typeof CHANGE_LANGUAGES
     payload: {
-        newLanguage: Language,
+        newLanguageCode: ValidLanguageCode,
         index: number
     }
 }

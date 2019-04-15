@@ -1,12 +1,9 @@
 import { InputState, AnyInputAction, CHANGE_TEXT, CHANGE_LANGUAGES } from './types'
+import { ValidLanguageCode } from '../../../types';
 
 const initialState: InputState = {
   text: 'initial low level',
-  languages: [
-    { name: "English", code: "en" },
-    { name: "Finnish", code: "fi" },
-    { name: "French", code: "fr" }
-  ]
+  languages: [ValidLanguageCode.en, ValidLanguageCode.fr, ValidLanguageCode.fi]
 }
 
 export const inputReducer = (state: InputState = initialState, action: AnyInputAction): InputState => {
@@ -21,7 +18,7 @@ export const inputReducer = (state: InputState = initialState, action: AnyInputA
         ...state,
         languages: [
           ...state.languages.slice(0, action.payload.index),
-          action.payload.newLanguage,
+          action.payload.newLanguageCode,
           ...state.languages.slice(action.payload.index + 1)
         ]
       }

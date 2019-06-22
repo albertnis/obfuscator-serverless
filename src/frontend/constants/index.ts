@@ -1,0 +1,3 @@
+
+declare const GLOBAL_TRANSLATE_API_URL: string;
+export const TRANSLATE_API_URL = GLOBAL_TRANSLATE_API_URL

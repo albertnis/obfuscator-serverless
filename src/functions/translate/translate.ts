@@ -6,11 +6,11 @@ import { TranslateTextResponse, TranslateTextRequest } from 'aws-sdk/clients/tra
 
 const MAX_LANGUAGES: number = 5
 
-var successResponse = (responseObj: any): LambdaResponse => response(responseObj, 200)
-var badParametersResponse = (responseObj: any): LambdaResponse => response(responseObj, 400)
+var successResponse = (responseObj: TranslateTextResponse[]): LambdaResponse => response(responseObj, 200)
+var badParametersResponse = (responseObj: string): LambdaResponse => response(responseObj, 400)
 var failedDependencyResponse = (responseObj: any): LambdaResponse => response(responseObj, 424)
 
-const response = (responseObj: any, code: number): LambdaResponse => {
+const response = (responseObj: TranslateTextResponse[] | string, code: number): LambdaResponse => {
   return {
     statusCode: code,
     headers: {

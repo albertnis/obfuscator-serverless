@@ -1,4 +1,8 @@
 const path = require("path");
+const webpack = require("webpack")
+const env = require("./env")
+
+var environment = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 
 // Frontend - bundle for client
 const frontend = {
@@ -36,7 +40,12 @@ const frontend = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx']
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'GLOBAL_TRANSLATE_API_URL': JSON.stringify(env.TRANSLATE_API_URL[environment])
+    })
+  ]
 };
 
 // Backend - output for running as server (node backend.js)
@@ -86,7 +95,12 @@ const backend = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx']
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'GLOBAL_TRANSLATE_API_URL': JSON.stringify(env.TRANSLATE_API_URL[environment])
+    })
+  ]
 };
 
 // Server - Serverless-Side Rendering provider. Function version of backend.js

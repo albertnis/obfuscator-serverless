@@ -6,18 +6,26 @@ import { createLogger } from 'redux-logger'
 
 import App from "./components/App"
 
-import { rootReducer } from './store'
+import { rootReducer, rootEpic } from './store'
+import { createEpicMiddleware } from "redux-observable";
 
 // Get initial state as injected by server
 // const initialState = window.__PRELOADED_STATE__
 
 
 const loggerMiddleware = createLogger()
-const store = createStore(rootReducer, applyMiddleware(loggerMiddleware))
+const epicMiddleware = createEpicMiddleware()
+
+const store = createStore(
+  rootReducer,
+  applyMiddleware(epicMiddleware, loggerMiddleware)
+)
+
+epicMiddleware.run(rootEpic)
 
 hydrate(
-    <Provider store={store}>
-        <App message="Take the following English phrase:" />
-    </Provider>,
-    document.getElementById("app")
+  <Provider store={store}>
+    <App message="Take the following English phrase:" />
+  </Provider>,
+  document.getElementById("app")
 )

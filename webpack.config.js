@@ -147,7 +147,12 @@ const server = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx']
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'GLOBAL_TRANSLATE_API_URL': JSON.stringify(env.TRANSLATE_API_URL[environment])
+    })
+  ]
 };
 
 // Translate - Translate API

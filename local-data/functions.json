@@ -2,19 +2,24 @@
     "translate": {
         "translations": [
             {
-                "TranslatedText": "pruebas",
+                "TranslatedText": "质量保证测试是潮湿的",
                 "SourceLanguageCode": "en",
-                "TargetLanguageCode": "es"
+                "TargetLanguageCode": "zh"
             },
             {
-                "TranslatedText": "preuve",
-                "SourceLanguageCode": "es",
-                "TargetLanguageCode": "fr"
+                "TranslatedText": "Проверка качества влажный",
+                "SourceLanguageCode": "zh",
+                "TargetLanguageCode": "ru"
             },
             {
-                "TranslatedText": "Todisteita",
-                "SourceLanguageCode": "fr",
-                "TargetLanguageCode": "fi"
+                "TranslatedText": "בדיקת איכות רטובה",
+                "SourceLanguageCode": "ru",
+                "TargetLanguageCode": "he"
+            },
+            {
+                "TranslatedText": "Wet Preflight",
+                "SourceLanguageCode": "he",
+                "TargetLanguageCode": "en"
             }
         ]
     }

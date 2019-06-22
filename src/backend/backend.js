@@ -18,13 +18,11 @@ app.use("/static", express.static("static"))
 app.disable("x-powered-by")
 app.listen(process.env.PORT || 3000)
 
-import initialState from "./initialState"
-
 import ssr from "./ServerClient"
 
 app.get("/", (req, res) => {
-  const content = ssr(initialState)
-  const response = view("Obfuscator", content)
+  const { content, state } = ssr()
+  const response = view("Obfuscator", content, state)
   res.setHeader("Cache-Control", "assets, max-age=604800")
   res.send(response)
 })

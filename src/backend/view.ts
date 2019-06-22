@@ -1,6 +1,6 @@
-import { AppState, initialState } from '../frontend/store/types'
+import { AppState } from '../frontend/store/types'
 
-const template = (title: string, content: string = "", preloadedState: AppState = initialState) => (
+const template = (title: string, content: string = "", preloadedState: AppState) => (
   `<!DOCTYPE html>
 <html lang="en">
   <head>

@@ -1,4 +1,4 @@
-import { TranslateState, AnyTranslateAction, TRANSLATE__SUCCESS, TRANSLATE__REQUEST } from './types'
+import { TranslateState, AnyTranslateAction, TRANSLATE__SUCCESS, TRANSLATE__REQUEST, TRANSLATE__FAILURE, TRANSLATE__ERROR } from './types'
 
 const initialState: TranslateState = {
   translations: null,
@@ -17,6 +17,18 @@ export const translateReducer = (state: TranslateState = initialState, action: A
       return {
         ...state,
         translations: action.payload.translations,
+        loading: false
+      }
+    case TRANSLATE__FAILURE:
+      return {
+        ...state,
+        translations: null,
+        loading: false
+      }
+    case TRANSLATE__ERROR:
+      return {
+        ...state,
+        translations: null,
         loading: false
       }
     default:

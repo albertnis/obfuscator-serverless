@@ -2,8 +2,8 @@ import { InputState, AnyInputAction, CHANGE_TEXT, CHANGE_LANGUAGES } from './typ
 import { ValidLanguageCode } from '../../../types';
 
 const initialState: InputState = {
-  text: 'initial low level',
-  languages: [ValidLanguageCode.en, ValidLanguageCode.fr, ValidLanguageCode.fi]
+  text: 'quality assurance testing is dank',
+  languages: [ValidLanguageCode.en, ValidLanguageCode.zh, ValidLanguageCode.ru, ValidLanguageCode.he]
 }
 
 export const inputReducer = (state: InputState = initialState, action: AnyInputAction): InputState => {

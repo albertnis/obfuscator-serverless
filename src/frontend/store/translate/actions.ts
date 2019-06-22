@@ -5,7 +5,8 @@ import { ValidLanguageCode } from '../../../types';
 import { TranslationResponse } from '../../../functions/translate/types';
 
 export const translateRequest = (inputState: InputState): AnyTranslateAction => {
-  let langParams = inputState.languages.map(lang =>
+  let cyclicLangs = [...inputState.languages, inputState.languages[0]]
+  let langParams = cyclicLangs.map(lang =>
     `&languages=${encodeURI(lang)}`
   ).join('')
 

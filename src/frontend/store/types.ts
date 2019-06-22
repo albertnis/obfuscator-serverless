@@ -6,15 +6,4 @@ export type AppState = {
   translate: TranslateState
 }
 
-export const initialState: AppState = {
-  input: {
-    text: 'indexinitial',
-    languages: []
-  },
-  translate: {
-    loading: false,
-    translations: []
-  }
-}
-
 export type AnyAction = AnyInputAction | AnyTranslateAction

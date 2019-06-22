@@ -10,7 +10,7 @@
     "start": "webpack --config webpack.config.js --mode development --watch",
     "dev-server": "webpack-dev-server --config webpack.config.js --mode development",
     "build-dev": "webpack --progress --config webpack.config.js --mode development",
-    "build-prod": "webpack --progress --config webpack.config.js --mode production"
+    "build-prod": "webpack --progress -p --config webpack.config.js --mode production"
   },
   "author": "Albert Nisbet",
   "license": "ISC",

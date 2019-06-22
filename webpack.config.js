@@ -2,7 +2,8 @@ const path = require("path");
 const webpack = require("webpack")
 const env = require("./env")
 
-var environment = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+var environment = process.argv.indexOf('-p') !== -1 ? 'production' : 'development';
+console.log('env is ', environment)
 
 // Frontend - bundle for client
 const frontend = {

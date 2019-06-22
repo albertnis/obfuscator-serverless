@@ -1,16 +1,16 @@
 import AWS, { AWSError } from 'aws-sdk'
 import { ValidLanguageCode } from '../../types'
-import { LambdaResponse } from './types'
+import { LambdaResponse, TranslationResponse } from './types'
 import { validateEvent } from './validation';
 import { TranslateTextResponse, TranslateTextRequest } from 'aws-sdk/clients/translate';
 
 const MAX_LANGUAGES: number = 5
 
-var successResponse = (responseObj: TranslateTextResponse[]): LambdaResponse => response(responseObj, 200)
+var successResponse = (responseObj: TranslationResponse): LambdaResponse => response(responseObj, 200)
 var badParametersResponse = (responseObj: string): LambdaResponse => response(responseObj, 400)
 var failedDependencyResponse = (responseObj: any): LambdaResponse => response(responseObj, 424)
 
-const response = (responseObj: TranslateTextResponse[] | string, code: number): LambdaResponse => {
+const response = (responseObj: TranslationResponse | string, code: number): LambdaResponse => {
   return {
     statusCode: code,
     headers: {
@@ -35,13 +35,13 @@ export const translate = async (event: any, context: any, callback: any) => {
   return
 }
 
-var runCyclicTranslation = async (client: AWS.Translate, text: string, languageCodes: ValidLanguageCode[]) => {
+var runCyclicTranslation = async (client: AWS.Translate, text: string, languageCodes: ValidLanguageCode[]): Promise<TranslationResponse> => {
   let responses = [await runTranslation(client, text, languageCodes[0], languageCodes[1])]
   for (let i = 1; i < (languageCodes.length - 1); i++) {
     let ithResponse = await runTranslation(client, responses[i - 1].TranslatedText, languageCodes[i], languageCodes[i + 1])
     responses = [...responses, ithResponse]
   }
-  return responses
+  return { translations: responses }
 }
 
 var runTranslation = async (client: AWS.Translate, text: string, from: ValidLanguageCode, to: ValidLanguageCode) => {

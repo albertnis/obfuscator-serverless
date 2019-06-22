@@ -10,7 +10,7 @@ import { AnyAction } from '../types';
 
 export const translateEpic = (action$: any): ActionsObservable<AnyAction> => action$.pipe(
     ofType(TRANSLATE__REQUEST),
-    mergeMap((action: TranslateRequestAction) =>
+    mergeMap((action: TranslateRequestAction) => 
       ajax.getJSON(`${TRANSLATE_API_URL}${action.payload.queryString}`).pipe(
         map(response => translateResponse(response)),
         catchError(_ => of(translateError()))

@@ -1,17 +1,21 @@
-[
-    {
-        "TranslatedText": "pruebas",
-        "SourceLanguageCode": "en",
-        "TargetLanguageCode": "es"
-    },
-    {
-        "TranslatedText": "preuve",
-        "SourceLanguageCode": "es",
-        "TargetLanguageCode": "fr"
-    },
-    {
-        "TranslatedText": "Todisteita",
-        "SourceLanguageCode": "fr",
-        "TargetLanguageCode": "fi"
+{
+    "translate": {
+        "translations": [
+            {
+                "TranslatedText": "pruebas",
+                "SourceLanguageCode": "en",
+                "TargetLanguageCode": "es"
+            },
+            {
+                "TranslatedText": "preuve",
+                "SourceLanguageCode": "es",
+                "TargetLanguageCode": "fr"
+            },
+            {
+                "TranslatedText": "Todisteita",
+                "SourceLanguageCode": "fr",
+                "TargetLanguageCode": "fi"
+            }
+        ]
     }
-]
+}

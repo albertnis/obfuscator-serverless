@@ -25,7 +25,7 @@ epicMiddleware.run(rootEpic)
 
 hydrate(
   <Provider store={store}>
-    <App message="Take the following English phrase:" />
+    <App />
   </Provider>,
   document.getElementById("app")
 )

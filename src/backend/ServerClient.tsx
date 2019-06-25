@@ -14,7 +14,7 @@ const store = createStore(
 const ssr = (): {content: string, state: AppState} => {
   let content = renderToString(
     <Provider store={store}>
-      <App message="Lambda-rendered" />
+      <App />
     </Provider>
   )
   let state = store.getState()

@@ -14,6 +14,6 @@ export type TranslateButtonProps = TranslateButtonStatefulProps & TranslateButto
 
 export default (props: TranslateButtonProps) => (
   <div>
-    <button disabled={props.loading} onClick={e => props.onClick(props.input)}>Translate</button>
+    <button className="translateButton" disabled={props.loading} onClick={e => props.onClick(props.input)}>Translate</button>
   </div>
 )

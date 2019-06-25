@@ -1,13 +1,26 @@
 import React from 'react'
 
 import TextInputContainer from '../containers/TextInputContainer'
-import LanguageSelectContainer from '../containers/LanguageSelectContainer';
+import LanguageSelectSectionContainer from '../containers/LanguageSelectSectionContainer';
 import TranslateButtonContainer from '../containers/TranslateButtonContainer';
 import ResultsContainer from '../containers/ResultsContainer';
+import Row from './Row';
 
-export default ({ message }: { message: string }) => (
+export default () => (
   <div className="appPlaceholder">
-    <div>Take the following <LanguageSelectContainer /> phrase: <TextInputContainer /><TranslateButtonContainer /></div>
+    <Row>
+      <h1>Obfuscator</h1>
+      <div className="horizontalRule"></div>
+    </Row>
+    <Row>
+      <TextInputContainer />
+    </Row>
+    <Row>
+      <LanguageSelectSectionContainer />
+    </Row>
+    <Row>
+      <TranslateButtonContainer />
+    </Row>
     <ResultsContainer />
   </div>
 )

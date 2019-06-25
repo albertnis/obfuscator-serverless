@@ -17,6 +17,7 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+	box-sizing: border-box;
 }
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
@@ -24,12 +25,6 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
 }
 blockquote:before, blockquote:after,
 q:before, q:after {
@@ -41,9 +36,118 @@ table {
 	border-spacing: 0;
 }
 
+
+:root {
+	--color-light: rgb(252, 252, 252);
+	--color-lightaccent: rgb(77, 197, 187);
+	--color-accent: rgb(15, 136, 126);
+	--color-darkaccent: rgb(17, 78, 73);
+	--color-dark: rgb(10, 10, 10);
+	--space-large: 5rem;
+	--space-medium: 3rem;
+	--space-small: 2rem;
+	--space-xsmall: 1rem;
+	--size-large: 5rem;
+	--size-medium: 3rem;
+	--size-small: 2rem;
+	--size-xsmall: 1rem;
+	--thickness-xlarge: 8px;
+	--thickness-large: 5px;
+	--thickness-medium: 3px;
+}
+
+html {
+	--color-foreground: var(--color-light);
+	--color-background: var(--color-darkaccent);
+	--color-hover: var(--color-accent);
+	--color-interact: var(--color-darkaccent);
+}
+
+html.light {
+	--color-foreground: var(--color-darkaccent);
+	--color-background: var(--color-light);
+	--color-hover: var(--color-lightaccent);
+	--color-interact: var(--color-accent);
+}
+
+html, body {
+	background-color: var(--color-background);
+	color: var(--color-foreground);
+	width: 100%;
+}
+
 #app {
     font-family: 'Jost', 'Product Sans', 'Futura', 'Univers', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+		font-size: 1.4rem;
+}
+
+h1 {
+	font-size: 3em;
+	font-weight: 500;
+}
+
+.row {
+	width: 100%;
+	position: relative;
+}
+
+.row-content {
+	margin: var(--space-large) auto 0 auto;
+	width: 740px;
+	padding: 0 var(--space-small);
+	max-width: 100%;
+}
+
+.horizontalRule {
+	height: var(--thickness-xlarge);
+	background-color: var(--color-foreground);
+	margin-top: var(--space-xsmall);
+	width: 8em;
+}
+
+.textInput-prompt {
+	font-weight: 600;
+	margin-bottom: var(--space-xsmall);
+}
+
+.textInput {
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	color: inherit;
+	outline: none;
+	font-size: inherit;
+	font-family: inherit;
+	background-color: transparent;
+	border: 0 solid var(--color-foreground);;
+	border-bottom-width: var(--thickness-small);
+	width: 100%;
+	max-width: 500px;
+}
+
+.translateButton {
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	color: inherit;
+	outline: none;
+	font-size: inherit;
+	font-family: inherit;
+	background-color: transparent;
+	font-weight: 600;
+	padding-left: var(--space-small);
+	padding-right: var(--space-small);
+	height: var(--size-large);
+	border-radius: calc(var(--size-large) / 2);
+	border: var(--thickness-xlarge) solid var(--color-foreground);
+	cursor: pointer;
+	transition: background-color .1s ease-in-out;
+}
+
+.translateButton:hover {
+	background-color: var(--color-hover);
+}
+
+.translateButton:active {
+	background-color: var(--color-interact);
 }

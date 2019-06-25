@@ -29,10 +29,14 @@ export default class extends React.Component<TextInputProps, TextInputState> {
   render() {
     var e = this.handleChange
     return (
-      <input
-        type="text" value={this.props.content}
-        onChange={e => this.handleChange(e)}
-      />
+      <div>
+        <div className="textInput-prompt">Take the following phrase</div>
+        <input
+          className="textInput"
+          type="text" value={this.props.content}
+          onChange={e => this.handleChange(e)}
+        />
+      </div>
     )
   }
 }

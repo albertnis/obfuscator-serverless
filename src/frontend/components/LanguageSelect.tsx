@@ -38,22 +38,37 @@ export default class extends React.Component<LanguageSelectProps, LanguageSelect
 
   textChange(e: ChangeEvent<HTMLInputElement>) {
     this.focus()
+    let newIndex = this.props.options.findIndex(o => o.content.toLowerCase().includes(e.target.value.toLowerCase()));
     this.setState(
       {
         textValue: e.target.value,
-        activeOptionIndex: this.props.options.findIndex(o =>
-          o.content.toLowerCase().includes(e.target.value.toLowerCase())
-        )
+        activeOptionIndex: newIndex
       }
     )
+    this.bringIntoView(newIndex)
   }
 
   focus() {
-    this.setState({ focused: true })
+    this.setState({ focused: true,
+      textValue: this.props.options.find(o => o.value === this.props.selectedValue).content })
+  }
+
+  handleBlur(e: React.FocusEvent<HTMLDivElement>) {
+    var currentTarget = e.currentTarget
+    setTimeout(function () {
+      if (!currentTarget.contains(document.activeElement)) {
+        this.blur()
+      }
+    }, 0)
   }
 
   blur() {
-    this.setState({ focused: false })
+    setTimeout(() =>
+      this.setState({
+        focused: false,
+        activeOptionIndex: -1,
+        textValue: this.props.options.find(o => o.value === this.props.selectedValue).content }), 50
+    )
   }
 
   onSelect(i: number) {
@@ -63,24 +78,30 @@ export default class extends React.Component<LanguageSelectProps, LanguageSelect
     this.blur()
   }
 
+  selectedValueChange() {
+    this.setState({ textValue: this.getItemByValue(this.props.selectedValue).content })
+  }
+
   onActiveChange(value: number) {
     this.setState({ activeOptionIndex: value })
   }
 
-  onKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
+  onKeyPress(e: React.KeyboardEvent<HTMLElement>) {
     switch (e.key) {
       case "Enter":
-        if (this.state.activeOptionIndex !== null) {
+        if (this.state.activeOptionIndex >= 0) {
           this.onSelect(this.state.activeOptionIndex)
         }
         break
       case "ArrowDown":
+        e.preventDefault()
         this.focus()
         this.moveOptionsPointer(1)
         break
       case "ArrowUp":
-        this.moveOptionsPointer(-1)
+        e.preventDefault()
         this.focus()
+        this.moveOptionsPointer(-1)
         break
       case "Tab":
         this.blur()
@@ -102,6 +123,13 @@ export default class extends React.Component<LanguageSelectProps, LanguageSelect
     }
     console.log(`pointer to ${newIndex}`)
     this.setState({ activeOptionIndex: newIndex })
+
+    this.bringIntoView(newIndex)
+  }
+
+  bringIntoView(index: number) {
+    let element = this.refs['ls'] as HTMLElement
+    element.querySelectorAll(`.languageOptions-option`)[index].scrollIntoView()
   }
 
   getItemByValue = (value: string) => this.props.options.find(o => o.value === value)
@@ -109,7 +137,8 @@ export default class extends React.Component<LanguageSelectProps, LanguageSelect
 
   filteredOptions = () => (
     this.props.options.filter(l =>
-      l.content.toLowerCase().includes(this.state.textValue.toLowerCase())
+      l.content.toLowerCase().includes(this.state.textValue.toLowerCase()) ||
+      l.preview.toLowerCase().includes(this.state.textValue.toLowerCase())
     )
   )
 
@@ -118,22 +147,25 @@ export default class extends React.Component<LanguageSelectProps, LanguageSelect
     let selectedItem = this.getItemByValue(selectedValue)
     return (
       <div
+        ref="ls"
         className={`languageSelect ${this.state.focused ? "languageSelect_focused" : ""}`}
       >
-        <input type="hidden" value={selectedValue}></input>
-        <span className="languageSelect-preview">{selectedItem.preview}</span>
+        <input type="hidden" value={selectedValue} onChange={() => this.selectedValueChange()}></input>
+        <div onClick={_ => this.focus()} className="languageSelect-preview">{selectedItem.preview}</div>
         <input
           type="text"
           className="languageSelect-textInput"
-          value={this.state.textValue}
+          value={this.state.focused ? this.state.textValue : selectedItem.content}
           onFocus={_ => this.focus()}
+          onClick={_ => this.focus()}
           onKeyDown={e => this.onKeyPress(e)}
           onChange={e => this.textChange(e)}
         ></input>
         {this.state.focused &&
-          <LanguageOptions
+          <LanguageOptions 
             onActiveChange={i => this.onActiveChange(i)}
             onSelect={i => this.onSelect(i)}
+            onFocus={() => this.focus()}
             activeValue={this.state.activeOptionIndex}
             items={options.map((l, i) => (
               {

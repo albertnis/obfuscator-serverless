@@ -43,12 +43,12 @@ class LanguageSelectSection extends React.Component<LanguageSelectProps> {
 
   render() {
     return (
-      <span className="languageSelect">
+      <span>
         <div>Translate it from</div>
-        <this.languageSelectElementNew i={0} disabled={false} />
+        <this.languageSelectElementNew i={0} key={0} disabled={false} />
         <div>Then through</div>
         {this.props.languages.slice(1).map((l, i) =>
-          <this.languageSelectElementNew i={i} disabled={false} />
+          <this.languageSelectElementNew key={i+1} i={i+1} disabled={false} />
         )}
         <div>Then back to</div>
         <this.languageSelectElementNew i={0} disabled={true} />

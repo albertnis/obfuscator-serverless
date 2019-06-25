@@ -8,6 +8,7 @@ const template = (title: string, content: string = "", preloadedState: AppState)
     <title>${title} </title>
     <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
     <link href="static/style.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
     <div class="content">

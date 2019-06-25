@@ -43,3 +43,10 @@ export const ValidLanguageNames: Record<ValidLanguageCode, string> = {
   sv: "Swedish",
   tr: "Turkish"
 }
+
+export const ValidLanguageList = Object.keys(ValidLanguageCode).map(code => (
+  {
+    code,
+    name: ValidLanguageNames[code as ValidLanguageCode]
+  }
+))

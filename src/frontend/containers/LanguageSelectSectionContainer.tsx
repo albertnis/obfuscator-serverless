@@ -1,7 +1,7 @@
 import { AppState } from '../store';
 import { changeLanguages } from '../store/input/actions';
 import { connect } from 'react-redux';
-import LanguageSelect, { LanguageSelectStatefulProps, LanguageSelectDispatchProps } from '../components/LanguageSelect';
+import LanguageSelectSection, { LanguageSelectStatefulProps, LanguageSelectDispatchProps } from '../components/LanguageSelectSection';
 import { ValidLanguageCode } from '../../types';
 
 const mapStateToProps = (state: AppState): LanguageSelectStatefulProps => ({
@@ -14,9 +14,9 @@ const mapDispatchToProps = (dispatch: any): LanguageSelectDispatchProps => ({
     }
 })
 
-const LanguageSelectContainer = connect(
+const LanguageSelectSectionContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(LanguageSelect)
+)(LanguageSelectSection)
 
-export default LanguageSelectContainer
+export default LanguageSelectSectionContainer

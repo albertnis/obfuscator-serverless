@@ -151,3 +151,7 @@ h1 {
 .translateButton:active {
 	background-color: var(--color-interact);
 }
+
+.languageOptions-option_active {
+	background-color: rgba(255,255,255,0.3);
+}

@@ -2,7 +2,7 @@ import view from '../../backend/view'
 import ssr from '../../backend/ServerClient'
 
 export const server = (event, context, callback) => {
-  const {renderOutput, state} = ssr()
+  const { renderOutput, state } = ssr()
   const content = view('Obfuscator', renderOutput, state)
 
   callback(null, {

@@ -5,7 +5,7 @@ const template = (title: string, content: string = "", preloadedState: AppState)
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>${title} </title>
+    <title>${title}</title>
     <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
     <link href="static/style.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">

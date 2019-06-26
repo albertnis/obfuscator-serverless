@@ -272,10 +272,10 @@ h1 {
 }
 
 .rowResults {
-	background-color: brown;
+	background-color: rgb(20, 95, 146);
 }
 
-.result:last-child .result-text {
+.result-text_final {
 	font-weight: 600;
 	font-size: var(--size-small);
 }

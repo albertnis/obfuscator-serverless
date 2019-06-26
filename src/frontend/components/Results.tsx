@@ -35,7 +35,9 @@ export default (props: ResultsProps) => (
           {[props.originalMapping, ...props.translations].map((t, i) =>
             <div className="result">
               <WrappedLanguageSelect t={t} i={i + 1} />
-              <div className="result-text">{t.text}</div>
+              <div className={`result-text${
+                i === props.translations.length ? ' result-text_final' : ''
+              }`}>{t.text}</div>
             </div>
           )}
           <div id="rowResults-end"></div>

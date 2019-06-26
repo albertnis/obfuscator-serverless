@@ -206,4 +206,5 @@ const translate = {
   }
 };
 
-module.exports = [frontend, backend, server, translate];
+
+module.exports = [frontend];

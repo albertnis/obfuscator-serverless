@@ -8,21 +8,19 @@ import Row from './Row';
 
 export default () => (
   <div className="appPlaceholder">
-    <Row>
+    <Row className="">
       <h1>Obfuscator</h1>
       <div className="horizontalRule"></div>
     </Row>
-    <Row>
+    <Row className="">
       <TextInputContainer />
     </Row>
-    <Row>
+    <Row className="">
       <LanguageSelectSectionContainer />
     </Row>
-    <Row>
+    <Row className="">
       <TranslateButtonContainer />
     </Row>
-    <Row>
       <ResultsContainer />
-    </Row>
   </div>
 )

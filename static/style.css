@@ -92,14 +92,19 @@ h1 {
 .row {
 	width: 100%;
 	position: relative;
+	padding: calc(var(--space-large) / 2) 0;
+}
+
+.row:first-child {
+	padding-top: var(--space-large);
 }
 
 .row:last-child {
-	margin-bottom: var(--space-large);
+	padding-bottom: var(--space-large);
 }
 
 .row-content {
-	margin: var(--space-large) auto 0 auto;
+	margin: 0 auto 0 auto;
 	width: 740px;
 	padding: 0 var(--space-small);
 	max-width: 100%;
@@ -264,4 +269,13 @@ h1 {
 
 .languageOptions-option_active {
 	background-color: rgba(255,255,255,0.3);
+}
+
+.rowResults {
+	background-color: brown;
+}
+
+.result:last-child .result-text {
+	font-weight: 600;
+	font-size: var(--size-small);
 }

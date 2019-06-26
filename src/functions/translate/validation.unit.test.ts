@@ -66,6 +66,25 @@ test('gracefully fails when no text present', () => {
   })
 })
 
+test('gracefully fails when text too long', () => {
+  let event = {
+    'queryStringParameters': {
+      'text': 'oh noes'
+    },
+    'multiValueQueryStringParameters': {
+      'languages': ['en', 'fr', 'es']
+    }
+  }
+
+  let result = validateEvent(event, 5, 2)
+
+  expect(result).toMatchObject({
+    Valid: false,
+    StatusMessage: 'Text to translate must be at most 2 characters long',
+    Result: null
+  })
+})
+
 test('gracefully fails when languages not present', () => {
   let event = {
     'queryStringParameters': {

@@ -1,10 +1,11 @@
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, RefObject } from 'react'
 import LanguageOptions from './LanguageOptions';
 import { ValidLanguageList } from '../../types';
 
 interface LanguageSelectStatefulProps {
   options: PreviewableString[],
-  selectedValue: string
+  selectedValue: string,
+  disabled: boolean
 }
 
 export interface LanguageSelectDispatchProps {
@@ -26,13 +27,31 @@ interface LanguageSelectState {
 }
 
 export default class extends React.Component<LanguageSelectProps, LanguageSelectState> {
+  wrapperRef: RefObject<HTMLDivElement>
+
   constructor(props: LanguageSelectProps) {
     super(props)
-
+    this.wrapperRef = React.createRef<HTMLDivElement>()
+    this.handleClickOutside = this.handleClickOutside.bind(this)
     this.state = {
       textValue: props.options.find(o => o.value === props.selectedValue).content,
       focused: false,
       activeOptionIndex: -1
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
+  handleClickOutside(e: MouseEvent) {
+    let wrapper = this.wrapperRef.current
+    if (wrapper && !wrapper.contains(event.target as Node)) {
+      this.blur()
     }
   }
 
@@ -49,17 +68,10 @@ export default class extends React.Component<LanguageSelectProps, LanguageSelect
   }
 
   focus() {
-    this.setState({ focused: true,
-      textValue: this.props.options.find(o => o.value === this.props.selectedValue).content })
-  }
-
-  handleBlur(e: React.FocusEvent<HTMLDivElement>) {
-    var currentTarget = e.currentTarget
-    setTimeout(function () {
-      if (!currentTarget.contains(document.activeElement)) {
-        this.blur()
-      }
-    }, 0)
+    if (!this.props.disabled) {
+      this.setState({ focused: true,
+        textValue: this.props.options.find(o => o.value === this.props.selectedValue).content })
+    }
   }
 
   blur() {
@@ -128,7 +140,7 @@ export default class extends React.Component<LanguageSelectProps, LanguageSelect
   }
 
   bringIntoView(index: number) {
-    let element = this.refs['ls'] as HTMLElement
+    let element = this.wrapperRef.current as HTMLElement
     element.querySelectorAll(`.languageOptions-option`)[index].scrollIntoView()
   }
 
@@ -143,12 +155,16 @@ export default class extends React.Component<LanguageSelectProps, LanguageSelect
   )
 
   render() {
-    let { options, selectedValue } = this.props
+    let { options, selectedValue, disabled } = this.props
     let selectedItem = this.getItemByValue(selectedValue)
     return (
       <div
-        ref="ls"
-        className={`languageSelect ${this.state.focused ? "languageSelect_focused" : ""}`}
+        ref={this.wrapperRef}
+        className={`languageSelect${
+          this.state.focused ? " languageSelect_focused" : ""
+        }${
+          disabled ? " languageSelect_disabled" : ""
+        }`}
       >
         <input type="hidden" value={selectedValue} onChange={() => this.selectedValueChange()}></input>
         <div onClick={_ => this.focus()} className="languageSelect-preview">{selectedItem.preview}</div>
@@ -160,6 +176,7 @@ export default class extends React.Component<LanguageSelectProps, LanguageSelect
           onClick={_ => this.focus()}
           onKeyDown={e => this.onKeyPress(e)}
           onChange={e => this.textChange(e)}
+          disabled={disabled}
         ></input>
         {this.state.focused &&
           <LanguageOptions 

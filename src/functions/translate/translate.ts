@@ -5,6 +5,7 @@ import { validateEvent } from './validation';
 import { TranslateTextResponse, TranslateTextRequest } from 'aws-sdk/clients/translate';
 
 const MAX_LANGUAGES: number = 5
+const MAX_CHARS: number = 100
 
 var successResponse = (responseObj: TranslationResponse): LambdaResponse => response(responseObj, 200)
 var badParametersResponse = (responseObj: string): LambdaResponse => response(responseObj, 400)
@@ -21,7 +22,7 @@ const response = (responseObj: TranslationResponse | string, code: number): Lamb
 }
 
 export const translate = async (event: any, context: any, callback: any) => {
-  let validationResponse = validateEvent(event, MAX_LANGUAGES)
+  let validationResponse = validateEvent(event, MAX_LANGUAGES, MAX_CHARS)
 
   if (!(validationResponse.Valid)) {
     callback(null, badParametersResponse(validationResponse.StatusMessage))

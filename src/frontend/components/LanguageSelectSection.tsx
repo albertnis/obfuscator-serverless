@@ -14,10 +14,13 @@ export interface LanguageSelectDispatchProps {
 export type LanguageSelectProps = LanguageSelectStatefulProps & LanguageSelectDispatchProps
 
 class LanguageSelectSection extends React.Component<LanguageSelectProps> {
-
   onChange = (event: ChangeEvent<HTMLSelectElement>, index: number): void => {
     let code = event.target.value as ValidLanguageCode
     this.props.onChange(code, index)
+  }
+
+  onFocus = (i: number) => {
+
   }
 
   languageSelectElement = ({ l, i, disabled }: { l: ValidLanguageCode, i: number, disabled: boolean }) => (
@@ -32,6 +35,7 @@ class LanguageSelectSection extends React.Component<LanguageSelectProps> {
     <LanguageSelect
       onChange={val => this.props.onChange(val as ValidLanguageCode, i)}
       selectedValue={this.props.languages[i]}
+      disabled={disabled}
       options={ValidLanguageList.map(l => (
         {
           preview: l.code,

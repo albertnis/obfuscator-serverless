@@ -21,6 +21,8 @@ export default () => (
     <Row>
       <TranslateButtonContainer />
     </Row>
-    <ResultsContainer />
+    <Row>
+      <ResultsContainer />
+    </Row>
   </div>
 )

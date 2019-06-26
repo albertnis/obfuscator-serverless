@@ -39,9 +39,11 @@ table {
 
 :root {
 	--color-light: rgb(252, 252, 252);
+	--color-lightsubtle: rgb(188, 207, 204);
 	--color-lightaccent: rgb(77, 197, 187);
 	--color-accent: rgb(15, 136, 126);
 	--color-darkaccent: rgb(17, 78, 73);
+	--color-darksubtle: rgb(53, 53, 53);
 	--color-dark: rgb(10, 10, 10);
 	--space-large: 5rem;
 	--space-medium: 3rem;
@@ -58,9 +60,10 @@ table {
 
 html {
 	--color-foreground: var(--color-light);
+	--color-foregroundsubtle: var(--color-lightsubtle);
 	--color-background: var(--color-darkaccent);
 	--color-hover: var(--color-accent);
-	--color-interact: var(--color-darkaccent);
+	--color-interact: var(--color-lightaccent);
 }
 
 html.light {
@@ -91,6 +94,10 @@ h1 {
 	position: relative;
 }
 
+.row:last-child {
+	margin-bottom: var(--space-large);
+}
+
 .row-content {
 	margin: var(--space-large) auto 0 auto;
 	width: 740px;
@@ -110,6 +117,12 @@ h1 {
 	margin-bottom: var(--space-xsmall);
 }
 
+.textInput-wrapper {
+	position: relative;
+	max-width: 500px;
+	width: 100%;
+}
+
 .textInput {
 	appearance: none;
 	-moz-appearance: none;
@@ -122,7 +135,14 @@ h1 {
 	border: 0 solid var(--color-foreground);;
 	border-bottom-width: var(--thickness-small);
 	width: 100%;
-	max-width: 500px;
+}
+
+.textInput-charCount {
+	position: absolute;
+	right: 0;
+	top: 100%;
+	margin-top: var(--space-xsmall);
+	font-size: var(--size-xsmall);
 }
 
 .translateButton {
@@ -135,13 +155,17 @@ h1 {
 	font-family: inherit;
 	background-color: transparent;
 	font-weight: 600;
-	padding-left: var(--space-small);
-	padding-right: var(--space-small);
+	width: 170px;
 	height: var(--size-large);
 	border-radius: calc(var(--size-large) / 2);
 	border: var(--thickness-xlarge) solid var(--color-foreground);
 	cursor: pointer;
-	transition: background-color .1s ease-in-out;
+	position: relative;
+	transform-origin: calc(var(--size-large) / 2) center;
+	transition: background-color .1s ease-in-out,
+		color .1s ease-out .2s,
+		width .1s ease-in-out .1s,
+		border-color .1s ease-in-out;
 }
 
 .translateButton:hover {
@@ -150,6 +174,33 @@ h1 {
 
 .translateButton:active {
 	background-color: var(--color-interact);
+}
+
+
+.translateButton_loading {
+	color: rgba(255,255,255,0);
+	width: var(--size-large);
+	transition: color .1s ease-out,
+		width .1s ease-in-out .1s,
+		border-color .1s ease-in-out .2s;
+	-webkit-animation: loadingCircle 1s ease-in-out infinite;
+	animation: loadingCircle 0.9s ease-in-out infinite;
+	animation-delay: .2s;
+	border-left-color: var(--color-background);
+	border-bottom-color: var(--color-background);
+	cursor: default;
+}
+
+.translateButton_loading:hover {
+	background-color: initial;
+}
+
+@-webkit-keyframes loadingCircle {
+	100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes loadingCircle {
+	100% { transform: rotate(360deg); }
 }
 
 .languageSelect {
@@ -166,6 +217,11 @@ h1 {
 
 .languageSelect_focused {
 	border-radius: calc(var(--size-medium) / 2) calc(var(--size-medium) / 2) 0 0;
+}
+
+.languageSelect_disabled {
+	border-color: var(--color-foregroundsubtle);
+	color: var(--color-foregroundsubtle);
 }
 
 .languageSelect-preview {

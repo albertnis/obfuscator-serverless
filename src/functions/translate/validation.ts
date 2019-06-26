@@ -1,7 +1,7 @@
 import { ValidationResponse } from './types';
 import { ValidLanguageCode } from '../../types'
 
-export const validateEvent = (event: any, maxLanguages: number): ValidationResponse => {
+export const validateEvent = (event: any, maxLanguages: number = 5, maxChars: number = 100): ValidationResponse => {
   console.log('Validating event')
   console.log(event)
   if (!('queryStringParameters' in event) || !('multiValueQueryStringParameters' in event)) {
@@ -27,6 +27,14 @@ export const validateEvent = (event: any, maxLanguages: number): ValidationRespo
     return {
       Valid: false,
       StatusMessage: 'No text to translate specified',
+      Result: null
+    }
+  }
+
+  if (qsp['text'].length > maxChars) {
+    return {
+      Valid: false,
+      StatusMessage: `Text to translate must be at most ${maxChars} characters long`,
       Result: null
     }
   }

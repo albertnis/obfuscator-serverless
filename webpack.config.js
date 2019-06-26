@@ -4,6 +4,7 @@ const env = require("./env")
 
 var environment = process.argv.indexOf('-p') !== -1 ? 'production' : 'development';
 console.log('env is ', environment)
+console.log('GLOBAL_TRANSLATE_API_URL is ', JSON.stringify(env.TRANSLATE_API_URL[environment]))
 
 // Frontend - bundle for client
 const frontend = {

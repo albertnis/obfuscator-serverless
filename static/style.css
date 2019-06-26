@@ -39,11 +39,11 @@ table {
 
 :root {
 	--color-light: rgb(252, 252, 252);
-	--color-lightsubtle: rgb(188, 207, 204);
+	--color-lightsubtle: rgba(252, 252, 252, 0.7);
 	--color-lightaccent: rgb(77, 197, 187);
 	--color-accent: rgb(15, 136, 126);
 	--color-darkaccent: rgb(17, 78, 73);
-	--color-darksubtle: rgb(53, 53, 53);
+	--color-darksubtle: rgba(10, 10, 10, 0.7);
 	--color-dark: rgb(10, 10, 10);
 	--space-large: 5rem;
 	--space-medium: 3rem;

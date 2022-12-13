@@ -1,13 +1,13 @@
 ## Running locally
 
-1. Install dependencies with NPM
+1. Install dependencies with Yarn
     ```bash
-    npm i
+    yarn install
     ```
 
 1. Run mocked function endpoints
     ```bash
-    npm run functions
+    yarn run functions
     ```
 
 1. Run in either front-end or full-stack mode, as below:
@@ -18,7 +18,7 @@ If you want to develop the frontend with hot-reloading, dev-server is your best 
 
 4. In a second terminal instance, run webpack dev server
     ```bash
-    npm run dev-server
+    yarn dev-server
     ```
 
 Then go to localhost:3000. Changes to code will trigger component reloads.
@@ -29,12 +29,12 @@ The full stack can also be tested.
 
 4. In a second terminal instance, build and watch frontend and backend with webpack
     ```bash
-    npm start
+    yarn start
     ```
 
 5. In a third terminal instance, start the backend with Node
     ```bash
-    npm run server
+    yarn server
     ```
 
 Then go to localhost:3000.
@@ -43,24 +43,24 @@ While the start script is running, changes to the frontend will require a browse
 
 ## Deploying
 
-1. Install dependencies with NPM
-    ```bash
-    npm i
+1. Install dependencies with Yarn
+    ```shell
+    yarn install
     ```
 
 1. Build assets with webpack
-    ```bash
-    npm run build-prod
+    ```shell
+    yarn build-prod
     ```
 
 1. Package functions
-    ```bash
+    ```shell
     cd deploy
     ./package.sh
     ```
 
 1. Deploy to AWS, passing name of deployment bucket to be created
-    ```bash
+    ```shell
     cd deploy
     ./deploy.sh unique-deployment-bucket-name
     ```

@@ -1,13 +1,14 @@
 {
-    "compilerOptions": {
-        "outDir": "./dist/",
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "allowSyntheticDefaultImports": true,
-        "module": "es6",
-        "moduleResolution": "node",
-        "target": "es2015",
-        "jsx": "react",
-        "allowJs": true
-    }
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "target": "ESNext",
+    "jsx": "react",
+    "allowJs": true,
+    "types": ["vite/client"]
+  }
 }

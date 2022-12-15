@@ -31,13 +31,9 @@
             {
               "Effect": "Allow",
               "Principal": {
-                "Service": [
-                  "lambda.amazonaws.com"
-                ]
+                "Service": ["lambda.amazonaws.com"]
               },
-              "Action": [
-                "sts:AssumeRole"
-              ]
+              "Action": ["sts:AssumeRole"]
             }
           ]
         },
@@ -57,13 +53,9 @@
             {
               "Effect": "Allow",
               "Principal": {
-                "Service": [
-                  "lambda.amazonaws.com"
-                ]
+                "Service": ["lambda.amazonaws.com"]
               },
-              "Action": [
-                "sts:AssumeRole"
-              ]
+              "Action": ["sts:AssumeRole"]
             }
           ]
         },
@@ -82,20 +74,14 @@
             {
               "Effect": "Allow",
               "Principal": {
-                "Service": [
-                  "apigateway.amazonaws.com"
-                ]
+                "Service": ["apigateway.amazonaws.com"]
               },
-              "Action": [
-                "sts:AssumeRole"
-              ]
+              "Action": ["sts:AssumeRole"]
             }
           ]
         },
         "Path": "/",
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
-        ]
+        "ManagedPolicyArns": ["arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"]
       }
     },
     "SiteBucket": {
@@ -114,9 +100,7 @@
               "Sid": "PublicReadGetObject",
               "Effect": "Allow",
               "Principal": "*",
-              "Action": [
-                "s3:GetObject"
-              ],
+              "Action": ["s3:GetObject"],
               "Resource": [
                 {
                   "Fn::Sub": "${SiteBucket.Arn}/*"
@@ -143,12 +127,9 @@
         },
         "Handler": "translate.translate",
         "Role": {
-          "Fn::GetAtt": [
-            "TranslateLambdaRole",
-            "Arn"
-          ]
+          "Fn::GetAtt": ["TranslateLambdaRole", "Arn"]
         },
-        "Runtime": "nodejs8.10",
+        "Runtime": "nodejs16.x",
         "MemorySize": 256,
         "Timeout": 5,
         "Environment": {
@@ -181,12 +162,9 @@
         },
         "Handler": "server.server",
         "Role": {
-          "Fn::GetAtt": [
-            "ServerLambdaRole",
-            "Arn"
-          ]
+          "Fn::GetAtt": ["ServerLambdaRole", "Arn"]
         },
-        "Runtime": "nodejs8.10",
+        "Runtime": "nodejs16.x",
         "MemorySize": 256,
         "Timeout": 5,
         "Environment": {
@@ -233,10 +211,7 @@
           }
         ],
         "ResourceId": {
-          "Fn::GetAtt": [
-            "APIGatewayRestApi",
-            "RootResourceId"
-          ]
+          "Fn::GetAtt": ["APIGatewayRestApi", "RootResourceId"]
         },
         "RestApiId": {
           "Ref": "APIGatewayRestApi"
@@ -247,10 +222,7 @@
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
-          "Fn::GetAtt": [
-            "APIGatewayRestApi",
-            "RootResourceId"
-          ]
+          "Fn::GetAtt": ["APIGatewayRestApi", "RootResourceId"]
         },
         "RestApiId": {
           "Ref": "APIGatewayRestApi"
@@ -298,10 +270,7 @@
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
-          "Fn::GetAtt": [
-            "APIGatewayRestApi",
-            "RootResourceId"
-          ]
+          "Fn::GetAtt": ["APIGatewayRestApi", "RootResourceId"]
         },
         "RestApiId": {
           "Ref": "APIGatewayRestApi"
@@ -355,7 +324,11 @@
     },
     "APIGatewayProdDeployment": {
       "Type": "AWS::ApiGateway::Deployment",
-      "DependsOn": ["APIGatewayStaticMethod", "APIGatewayTranslateMethod", "APIGatewayServerMethod"],
+      "DependsOn": [
+        "APIGatewayStaticMethod",
+        "APIGatewayTranslateMethod",
+        "APIGatewayServerMethod"
+      ],
       "Properties": {
         "RestApiId": {
           "Ref": "APIGatewayRestApi"
@@ -401,10 +374,7 @@
     "APIDistributedDomainName": {
       "Description": "The Amazon CloudFront distribution domain name that's mapped to the custom domain name",
       "Value": {
-        "Fn::GetAtt": [
-          "APIGatewayDomainName",
-          "DistributionDomainName"
-        ]
+        "Fn::GetAtt": ["APIGatewayDomainName", "DistributionDomainName"]
       },
       "Export": {
         "Name": "ObfuscatorAPIDistributedDomainName"

@@ -1,5 +1,5 @@
 import React from 'react'
-import { hydrate } from 'react-dom'
+import { hydrateRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger'
@@ -24,9 +24,9 @@ const store = createStore(
 
 epicMiddleware.run(rootEpic)
 
-hydrate(
+hydrateRoot(
+  document.getElementById('app'),
   <Provider store={store}>
     <App />
-  </Provider>,
-  document.getElementById('app')
+  </Provider>
 )

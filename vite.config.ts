@@ -7,5 +7,8 @@ export default defineConfig({
   envDir: process.cwd(),
   server: {
     port: 3000,
+    proxy: {
+      '/translate': 'http://localhost:3001',
+    },
   },
 })

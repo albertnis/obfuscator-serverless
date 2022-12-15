@@ -16,7 +16,7 @@ if (environmentConfig.VerboseServer) {
 app.use("/static", express.static("static"))
 
 app.disable("x-powered-by")
-app.listen(process.env.PORT || 3000)
+app.listen(process.env.PORT || 3001)
 
 import ssr from "./ServerClient"
 

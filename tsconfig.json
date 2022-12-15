@@ -9,6 +9,6 @@
     "target": "ESNext",
     "jsx": "react",
     "allowJs": true,
-    "types": ["vite/client"]
+    "types": ["vite/client", "jest"]
   }
 }

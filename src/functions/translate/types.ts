@@ -1,23 +1,23 @@
 import { ValidLanguageCode } from '../../types'
-import { TranslateTextResponse } from 'aws-sdk/clients/translate';
+import { TranslateTextCommandOutput } from '@aws-sdk/client-translate'
 
 export interface Request {
-    text: string,
-    languageCodes: ValidLanguageCode[]
-  }
+  text: string
+  languageCodes: ValidLanguageCode[]
+}
 
 export interface ValidationResponse {
-  Valid: boolean;
-  StatusMessage: string;
-  Result: Request;
+  Valid: boolean
+  StatusMessage: string
+  Result: Request
 }
 
 export interface TranslationResponse {
-  translations: TranslateTextResponse[]
+  translations: TranslateTextCommandOutput[]
 }
 
 export interface LambdaResponse {
-  statusCode: number,
-  headers: any,
+  statusCode: number
+  headers: any
   body: string
 }

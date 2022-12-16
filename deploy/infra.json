@@ -129,7 +129,7 @@
         "Role": {
           "Fn::GetAtt": ["TranslateLambdaRole", "Arn"]
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "MemorySize": 256,
         "Timeout": 5,
         "Environment": {
@@ -164,7 +164,7 @@
         "Role": {
           "Fn::GetAtt": ["ServerLambdaRole", "Arn"]
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "MemorySize": 256,
         "Timeout": 5,
         "Environment": {

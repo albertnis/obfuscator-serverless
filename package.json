@@ -11,8 +11,10 @@
     "start:frontend": "vite",
     "build:frontend": "vite build -c frontend.vite.config.ts",
     "build:frontend:dev": "yarn run build:frontend --mode development",
-    "build:functions": "vite build -c functions.vite.config.ts",
-    "build:functions:dev": "yarn run build:functions --mode development"
+    "build:translate": "vite build -c src/functions/translate/vite.config.ts",
+    "build:translate:dev": "yarn run build:translate --mode development",
+    "build:server": "vite build -c src/functions/server/vite.config.ts",
+    "build:server:dev": "yarn run build:server --mode development"
   },
   "author": "Albert Nisbet",
   "license": "ISC",

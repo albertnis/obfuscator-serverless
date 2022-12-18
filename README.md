@@ -47,6 +47,7 @@ The full stack can also be tested.
    ```
 
 5. In a third terminal instance, start a local mock of the backend with Node. This starts a web server which calls the SSR logic of the translate Labmda.
+
    ```bash
    yarn start:localserver
    ```
@@ -65,6 +66,8 @@ While the start script is running, changes to the frontend will require a re-run
 
 1. Build assets with webpack
 
+   > Note: Due to a missing feature in Vite, you need to build each lambda separately. See [functions.vite.config.ts]() for more information
+
    ```shell
    yarn build:functions && yarn build:frontend
    ```
@@ -77,6 +80,7 @@ While the start script is running, changes to the frontend will require a re-run
    ```
 
 1. Deploy to AWS, passing name of deployment bucket to be created
+
    ```shell
    cd deploy
    ./deploy.sh unique-deployment-bucket-name

@@ -12,6 +12,9 @@ export default defineConfig({
       '/translate': 'http://localhost:3001',
     },
   },
+  // Note: this does not currently work as it makes a chunk
+  // Workaround: Comment out each entrypoint in turn and build separately
+  // TODO: Split into separate configs or whatever is required
   build: {
     lib: {
       entry: {

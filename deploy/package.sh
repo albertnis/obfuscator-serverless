@@ -1,8 +1,8 @@
 GIT_HASH=$(git rev-parse --short HEAD)
 
 # 1. Copy files temporarily
-cp ../src/functions/server/dist/server.js ./server.js
-cp ../src/functions/translate/dist/translate.js ./translate.js
+cp ../src/functions/dist/server.mjs ./server.mjs
+cp ../src/functions/dist/translate.mjs ./translate.mjs
 
 # 3. Create build directory
 mkdir -p ../dist
@@ -11,5 +11,5 @@ mkdir -p ../dist
 rm -f ../dist/*
 
 # 4. Package (move) into zip files
-zip -m ../dist/server-$GIT_HASH.zip ./server.js
-zip -m ../dist/translate-$GIT_HASH.zip ./translate.js
+zip -m ../dist/server-$GIT_HASH.zip ./server.mjs
+zip -m ../dist/translate-$GIT_HASH.zip ./translate.mjs

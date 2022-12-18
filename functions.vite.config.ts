@@ -4,7 +4,7 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react()],
-  root: 'src',
+  root: 'src/functions',
   envDir: process.cwd(),
   server: {
     port: 3000,

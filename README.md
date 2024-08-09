@@ -1,5 +1,8 @@
 # Obfusactor Serverless
 
+> [!IMPORTANT]
+> Superseded by [albertnis/obfuscator-htmx](https://github.com/albertnis/obfuscator-htmx)
+
 There are three deployables in this repo:
 
 | Entrypoint                               | Description                                                        |
